@@ -1,0 +1,40 @@
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 390px;
+    box-sizing: border-box;
+    padding: 14px;
+}
+
+.header-title {
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 39px;
+    text-align: left;
+}
+
+.header-title_letter {
+    font-size: 34px;
+    font-weight: 100;
+    line-height: 39px;
+    text-align: left;
+}
+
+.header-button_style {
+    color: white;
+    background: #16a6af;
+    height: 40px;
+    padding: 12px;
+    border-radius: 3px;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: center;
+    box-shadow: 0px 0px 3px 0px #0000001f;
+}
+
+.header-button_style:hover {
+    box-shadow: 0px 3px 3px 0px #0000003d;
+}

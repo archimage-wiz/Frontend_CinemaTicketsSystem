@@ -1,0 +1,30 @@
+.admin-header_container {
+    display: flex;
+    max-height: 120px;
+    min-height: 79px;
+    height: 120px;
+    width: 100%;
+    min-width: 390px;
+    box-sizing: border-box;
+    padding: 30px 0px 0px 50px;
+}
+
+@media (max-width: 768px) {
+    .admin-header_container {
+        height: 79px;
+        padding: 15px 0px 0px 25px;
+    }
+}
+
+.admin-header-title_subtext {
+    text-align: left;
+    font-family: "Roboto-Regular", Helvetica;
+    font-size: 10px;
+    letter-spacing: 5px;
+    line-height: 12px;
+    position: relative;
+    width: fit-content;
+    font-weight: 400;
+    color: #ffffff;
+    white-space: nowrap;
+}
