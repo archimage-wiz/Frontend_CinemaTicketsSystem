@@ -14,8 +14,6 @@ export function Admin() {
     const [backend] = useState(BackendAPI.getInstance());
     const [isAuth, setAuth] = useState(backend.isAuth);
 
-    fun
-
     return (
         <>
             <div className="admin-body">
@@ -28,14 +26,12 @@ export function Admin() {
                             <HallPriceConf />
                             <FilmScheduler />
                             <HallOpenCloseConf />
-                            
                         </>
                     ) : (
-                        <Login setAuth={setAuth}  />
+                        <Login setAuth={setAuth} />
                     )}
                 </div>
             </div>
-            
         </>
     );
 }

@@ -1,12 +1,26 @@
-import { useState } from "react";
 import "../HallContainer.css";
+import "./HallSet.css";
+import { useEffect, useState } from "react";
 import { HallAddPopup } from "./HallAddPopup/HallAddPopup";
+import { BackendAPI } from "../../../BackendAPI";
 
 export function HallSet() {
+    const [backend] = useState(BackendAPI.getInstance());
     const [showAdd, setShowAdd] = useState(false);
+    const [halls, setHalls] = useState(backend.getHalls());
 
-    function addHall() {
+    useEffect(() => {
+        backend.setUpdateF("halls", updateHalls);
+    }, []);
+    function updateHalls() {
+        setHalls(backend.getHalls());
+    }
+
+    function showAddHall() {
         setShowAdd(true);
+    }
+    function hideAddHall() {
+        setShowAdd(false);
     }
 
     return (
@@ -17,16 +31,18 @@ export function HallSet() {
                     <div className="admin-hall_title_close"></div>
                 </header>
                 <section className="admin-hall_container_body">
-                    
                     <div>Доступные залы:</div>
-
-                    <div>ЗАЛ 1 <div className="admin-hall_delete_button"></div></div>
-                    <div>ЗАЛ 2</div>
-
-                    <button onClick={addHall}>СОЗДАТЬ ЗАЛ</button>
+                    {halls?.map((hall: { hall_name: string }) => (
+                        <div className="admin-hallset_list_item" key={crypto.randomUUID()}>
+                            <div>-</div>
+                            <div>{hall.hall_name}</div>
+                            <div className="admin-hall_delete_button"></div>
+                        </div>
+                    ))}
+                    <button onClick={showAddHall}>СОЗДАТЬ ЗАЛ</button>
                 </section>
             </div>
-            {showAdd ? <HallAddPopup /> : null}
+            {showAdd ? <HallAddPopup closeFunc={hideAddHall} /> : null}
         </>
     );
 }

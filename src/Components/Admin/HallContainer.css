@@ -89,6 +89,7 @@
     white-space: nowrap;
     padding: 11.2px 31.38px 11.9px 31.73px;
     border: none;
+    cursor: pointer;
 }
 
 .admin-hall_container_body button:hover {

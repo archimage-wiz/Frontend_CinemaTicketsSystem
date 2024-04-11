@@ -81,7 +81,7 @@
     font-weight: 400;
     line-height: 14px;
     text-align: left;
-    width: 272px;
+    width: 100%;
 }
 
 .admin-popup_form_container input {
@@ -111,6 +111,7 @@
     padding: 11.2px 31.24px 11.9px 31.56px;
     white-space: nowrap;
     min-width: 200px;
+    cursor: pointer;
 }
 
 
