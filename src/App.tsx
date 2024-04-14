@@ -1,7 +1,7 @@
-import "./App.css";
+import "./css/global.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Main } from "./Components/Main/Main.tsx";
-import { Admin } from "./Components/Admin/Admin.tsx";
+import { Main } from "./components.one/Main/Main.tsx";
+import { Admin } from "./components.one/Admin/Admin.tsx";
 
 function App() {
     return (

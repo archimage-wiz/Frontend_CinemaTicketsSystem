@@ -1,0 +1,133 @@
+
+.hall-seats__choose-hall-title {
+    padding: 0px 0px 12px 0px;
+}
+.hall-seats__choose-seats-title {
+    padding: 36px 0px 12px 0px;
+}
+.hall-seats__choose-seats-type-title {
+    padding: 36px 0px 12px 0px;
+}
+.hall-seats__choose-seats-change-type-title {
+    padding: 0px 0px 11px 0px;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+    color: rgba(132, 132, 132, 1);
+}
+.hall-seats__seats-info-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding-bottom: 11px;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+    color: rgba(132, 132, 132, 1);
+}
+
+.admin-hallseats_list_item {
+    border: 1px solid;
+}
+
+.hall-seats__rows-seats {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.hall-seats__rows-seats label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    color: rgba(132, 132, 132, 1);
+}
+.hall-seats__rows-seats input {
+    width: 100px;
+    height: 36px;
+    padding: 8px 8.8px 9px 8.8px;
+    gap: 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    box-sizing: border-box;
+}
+.hall-seats__rows-seats div {
+    text-transform: uppercase;
+    position: relative;
+    top: 6px;
+    font-family: Consolas;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 21px;
+    color: rgba(132, 132, 132, 1);
+}
+
+.hall-seats__buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    align-self: stretch;
+}
+
+.admin-hallseats_conf_main_container {
+    width: 100%;
+    border: 1px solid;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-hallseats_conf_seats_container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.admin-hallseats_conf_seats_container::before {
+    content: "экран";
+    padding-bottom: 20px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 19px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.admin-hallseats_conf_seats_row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.admin-hallseats_conf_aloneseat {
+    width: 26px;
+    height: 26px;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.admin-hallseats_conf_aloneseat_standart {
+    background: rgba(196, 196, 196, 1);
+    border: 1px solid rgba(57, 57, 57, 1)
+}
+
+.admin-hallseats_conf_aloneseat_vip {
+    background: rgba(196, 196, 196, 1);
+    background: url("img/vip_seat.png");
+    border: 1px solid rgba(10, 130, 138, 1)
+}
+
+.admin-hallseats_conf_aloneseat_disabled {
+    background-color: transparent;
+    border: 1px solid rgba(196, 196, 196, 1);
+}

@@ -1,0 +1,44 @@
+.hall-chooser__hall-list {
+    display: flex;
+}
+
+.hall-chooser__hall-item {
+    height: min-content;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.12);
+    width: fit-content;
+    padding: 12.2px 20.25px 12.9px 21px;
+    border-radius: 3px 0px 0px 0px;
+    background: rgba(255, 255, 255, 0.45);
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: left;
+    color: rgba(0, 0, 0, 1);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.hall-chooser__hall-item:hover {
+    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.24);
+}
+
+.hall-chooser__hall-item_selected {
+    background: rgba(255, 255, 255, 1);
+    padding: 15.41px 23.03px 13.9px 23.1px;
+    gap: 0px;
+    border-radius: 3px 0px 0px 0px;
+    opacity: 0px;
+    font-size: 15px;
+    font-weight: 900;
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.24);
+}
+
+.hall-chooser__hall-item_selected:hover {
+    box-shadow: 0px 6px 8px 0px rgba(0, 0, 0, 0.24);
+}
+
+
+
+
+

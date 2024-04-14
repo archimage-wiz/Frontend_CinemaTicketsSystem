@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BackendAPI} from "../../../../BackendAPI";
+import { BackendAPI} from "../../../../BackendAPI/BackendAPI.tsx";
 
 type HallAddPopupProps = {
     closeFunc: () => void;

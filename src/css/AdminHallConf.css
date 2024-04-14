@@ -1,4 +1,3 @@
-
 .admin-hall_container {
     display: flex;
     flex-direction: column;
@@ -24,12 +23,32 @@
     line-height: 25px;
 }
 
-.admin-hall_title::before {
+.admin-hall_title_linedecorator::before {
     content: "";
     position: absolute;
     width: 3px;
     height: 48px;
     top: 48px;
+    left: 61px;
+    background-color: #bc95d6;
+}
+
+.admin-hall_title_linedecorator_upper::before {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 48px;
+    top: 0px;
+    left: 61px;
+    background-color: #bc95d6;
+}
+
+.admin-hall_title_linedecorator_both::before {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    top: 0px;
     left: 61px;
     background-color: #bc95d6;
 }
@@ -59,7 +78,7 @@
 }
 
 .admin-hall_container_body {
-    font-family: "Roboto", Helvetica, sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 16px;
     font-weight: 500;
     color: black;
@@ -69,6 +88,21 @@
     background: rgba(234, 233, 235, 0.95);
     padding: 35px 35px 35px 104px;
     text-align: center;
+    position: relative;
+}
+
+.admin-hall_container_body_hidden {
+    display: none;
+}
+
+.admin-hall_container_body_linedecorator:before {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    top: 0px;
+    left: 61px;
+    background-color: #bc95d6;
 }
 
 .admin-hall_container_body button {
@@ -95,25 +129,3 @@
 .admin-hall_container_body button:hover {
     box-shadow: 0px 3px 3px #0000003d;
 }
-
-
-.admin-hall_delete_button {
-    position: relative;
-    width: 20px;
-    height: 20px;
-    margin-right: -10px;
-    border-radius: 3px;
-    box-shadow: 0px 0px 3px #0000001f;
-    background: url("img/basket.png");
-    background-position: 4px 4px;
-    background-size: 24px 12px;
-    background-color: white;
-    border-radius: 3px;
-    background-repeat: no-repeat;
-    cursor: pointer;
-}
-
-.admin-hall_delete_button:hover {
-    box-shadow: 0px 3px 3px #0000003d;
-}
-

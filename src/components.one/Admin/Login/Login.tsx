@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
 import "./Login.css";
-import { BackendAPI } from "../../../BackendAPI";
+import { BackendAPI } from "../../../BackendAPI/BackendAPI.tsx";
+import { useRef, useState } from "react";
 
 type LoginProps = {
     setAuth: (data: boolean) => void;

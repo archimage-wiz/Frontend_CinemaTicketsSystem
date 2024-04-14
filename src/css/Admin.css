@@ -1,4 +1,4 @@
-.admin-body {
+body {
     background-color: rgba(0, 0, 0, 0.5);
     background-image: url("img/admin_bg.jpg");
     background-repeat: no-repeat;
@@ -20,7 +20,7 @@
     }
 }
 
-.admin-content_container {
+.admin-main {
     max-width: 960px;
     min-width: 390px;
     margin: 0 auto;

@@ -1,0 +1,42 @@
+
+.hall-set {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0px 15px 15px;
+    gap: 10px;
+}
+
+.admin-hallset_list_item {
+    display: flex;
+    gap: 10px;
+    color: black;
+    flex-wrap: nowrap;
+    align-items: center;
+    box-sizing: border-box;
+    font-family: "Roboto";
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 18px;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.admin-hall_delete_button {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin-right: -10px;
+    border-radius: 3px;
+    box-shadow: 0px 0px 3px #0000001f;
+    background: url("img/basket.png");
+    background-position: 4px 4px;
+    background-size: 24px 12px;
+    background-color: white;
+    border-radius: 3px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.admin-hall_delete_button:hover {
+    box-shadow: 0px 3px 3px #0000003d;
+}

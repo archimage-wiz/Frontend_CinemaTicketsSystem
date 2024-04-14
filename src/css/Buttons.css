@@ -1,0 +1,23 @@
+.standart-button {
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: center;
+    background: rgba(22, 166, 175, 1);
+    width: fit-content;
+    height: 40px;
+    padding: 11.2px 32px 11.9px 32px;
+    border-radius: 3px;
+    opacity: 0px;
+    border: none;
+    box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.12);
+    color: rgba(255, 255, 255, 1);
+    text-transform: uppercase;
+    cursor: pointer;
+    /* transition: box-shadow 0.15s ease-in-out; */
+}
+.standart-button:hover {
+    box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.24);
+}
+

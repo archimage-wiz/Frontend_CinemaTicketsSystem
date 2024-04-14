@@ -80,13 +80,31 @@ export class BackendAPI {
             body: data,
         });
         if (!res.ok) {
-            alert(res.ok);
+            alert(res.statusText);
             return;
         }
         const jsonData = await res.json();
         if (jsonData.success === true) {
             this.refreshAllData();
             callBackF();
+        } else {
+            alert("Error: " + jsonData.error);
+        }
+    }
+    public async deleteHall(id: number): Promise<void> {
+        if (!this.isAuth) return;
+        const res = await fetch(this.domain + "/hall/" + id, {
+            method: "DELETE",
+        });
+        if (!res.ok) {
+            alert(res.statusText);
+            return;
+        }
+        // console.log(res);
+        const jsonData = await res.json();
+        // console.log(jsonData);
+        if (jsonData.success === true) {
+            this.refreshAllData();
         } else {
             alert("Error: " + jsonData.error);
         }
