@@ -2,7 +2,7 @@
 .hall-set {
     display: flex;
     flex-direction: column;
-    padding: 15px 0px 15px 15px;
+    padding: 14px 0px 22px 25px;
     gap: 10px;
 }
 

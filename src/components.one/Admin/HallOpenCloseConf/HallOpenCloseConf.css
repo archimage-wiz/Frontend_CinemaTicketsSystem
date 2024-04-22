@@ -1,0 +1,28 @@
+.hall-openclose__choose-hall-title {
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: left;
+    padding-bottom: 29px;
+    color: black;
+}
+
+.hall-openclose__ready-title {
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: center;
+    color: black;
+    padding-top: 29px;
+    padding-bottom: 29px;
+    display: flex;
+    align-self: stretch;
+    justify-content: center;
+}
+
+.hall-openclose__apply-button {
+    align-self: center;
+    
+}

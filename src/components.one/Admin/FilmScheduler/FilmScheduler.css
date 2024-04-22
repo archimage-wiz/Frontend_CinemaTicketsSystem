@@ -1,0 +1,126 @@
+.film-seances__film-chooser_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding-top: 12px;
+    padding-bottom: 51px;
+}
+
+.film-seances__film-chooser-item {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    width: 259px;
+    height: 52px;
+    display: flex;
+}
+.film-seances__film-chooser-poster {
+    width: 38px;
+    height: 50px;
+    object-fit: cover;
+}
+.film-seances__film-chooser-title {
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: left;
+}
+.film-seances__film-chooser-duration {
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.7);
+
+}
+.film-seances__film-chooser-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    justify-content: center;
+}
+
+.film-seances__seance-scheduler_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 35px;
+    padding-right: 35px;
+    gap: 35px;
+}
+
+.film-seances__hall-item_container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.film-seances__seance-scheduler-title {
+    text-transform: uppercase;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 18px;
+    text-align: left;
+}
+
+.film-seances__seance-scheduler-seances {
+    border: 1px solid rgba(132, 132, 132, 1);
+    max-width: 746px;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+.film-seances__seance-scheduler-seance {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    height: 40px;
+    top: 10px;
+    padding: 10px;
+    border: 1px;
+    opacity: 0px;
+    font-family: Roboto;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 10px;
+    box-sizing: border-box;
+    /* overflow: hidden; */
+    width: min-content;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    text-align: left;
+}
+
+.film-seances__seance-scheduler-seance::before {
+    content: "";
+    position: absolute;
+    width: 1px;
+    max-width: 1px;
+    min-width: 1px;
+    height: 5px;
+    background: rgba(132, 132, 132, 1);
+    top: 49px;
+    left: 0px;
+}
+
+.film-seances__seance-scheduler-time {
+    position: absolute;
+    top: 55px;
+    left: -15px;
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    text-align: left;
+    height: 13.8px;
+    color: rgba(132, 132, 132, 1);
+
+}

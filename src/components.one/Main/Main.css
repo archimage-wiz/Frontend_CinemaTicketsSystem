@@ -1,12 +1,12 @@
 .main-body_bg {
-    background-image: url("img/index_bg.jpg");
+    background-image: url("/img/index_bg.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-color: hsl(0, 0%, 19%);
     font-family: "Roboto", sans-serif;
     color: #fff;
-    height: 100vh;
     min-width: 390px;
+    padding-bottom: 25px;
 }
 
 .main-content_container {

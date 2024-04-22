@@ -16,19 +16,21 @@ export function Admin() {
 
     return (
         <>
-            <div className="admin-main">
-                <Header />
-                {isAuth ? (
-                    <>
-                        <HallSet />
-                        <HallSeatsConf />
-                        <HallPriceConf />
-                        <FilmScheduler />
-                        <HallOpenCloseConf />
-                    </>
-                ) : (
-                    <Login setAuth={setAuth} />
-                )}
+            <div className="admin-main-bg">
+                <div className="admin-main">
+                    <Header />
+                    {isAuth ? (
+                        <>
+                            <HallSet />
+                            <HallSeatsConf />
+                            <HallPriceConf />
+                            <FilmScheduler />
+                            <HallOpenCloseConf />
+                        </>
+                    ) : (
+                        <Login setAuth={setAuth} />
+                    )}
+                </div>
             </div>
         </>
     );

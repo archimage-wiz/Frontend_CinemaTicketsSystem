@@ -1,13 +1,23 @@
+import "../../../css/Buttons.css";
 import "./Header.css";
 
-export function Header() {
+type HeaderProps = {
+    options: {
+        loginButton: boolean
+    }
+}
+
+export function Header(props: HeaderProps) {
+    const { loginButton } = props.options;
+    
+
     return (
         <>
             <header className="header-container">
                 <span className="header-title">
-                    ИДЁМ<span className="header-title_letter">В</span>КИНО
+                    ИДЁМ<span className="header-title__letter">В</span>КИНО
                 </span>
-                <button className="header-button_style">ВОЙТИ</button>
+                {loginButton && <button className="standart-button">ВОЙТИ</button>}
             </header>
         </>
     );

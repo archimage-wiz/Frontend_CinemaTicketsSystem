@@ -1,0 +1,97 @@
+.HallSeatsChooser__header-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: rgba(241, 235, 230, 0.95);
+    padding: 15px;
+    border-radius: 2px 2px 0px 0px;
+    gap: 7px;
+}
+
+.HallSeatsChooser__header-film-title {
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: left;
+    color: rgba(0, 0, 0, 1);
+}
+
+.HallSeatsChooser__header-film-duration {
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 16px;
+    text-align: left;
+    color: rgba(0, 0, 0, 1);
+}
+
+.HallSeatsChooser__header-hall-name {
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: left;
+    color: black;
+}
+
+.HallSeatsChooser__seats-main-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: rgba(23, 29, 36, 1);
+    padding: 15px 30px;
+    color: rgba(255, 255, 255, 1);
+    align-items: center;
+}
+
+.HallSeatsChooser__seats {
+    width: 284px;
+    height: 266px;
+    background: url("/img/screen.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.HallSeatsChooser__seats-row {
+    display: flex;
+    gap: 4px;
+}
+
+.HallSeatsChooser__seat {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.HallSeatsChooser__seat_standart {
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(82, 82, 82, 1)
+}
+
+.HallSeatsChooser__seat_vip {
+    background: rgba(249, 149, 58, 1);
+    border: 1px solid rgba(82, 82, 82, 1)
+}
+
+.HallSeatsChooser__seat_selected {
+    background: rgba(37, 196, 206, 1);
+    border: 1px solid rgba(82, 82, 82, 1)
+}
+
+.HallSeatsChooser__seat_taken {
+    border: 1px solid rgba(82, 82, 82, 1);
+    cursor: default;
+}
+
+.HallSeatsChooser__seat_disabled {
+    background: transparent;
+    cursor: default;
+}

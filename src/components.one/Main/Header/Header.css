@@ -8,7 +8,7 @@
 }
 
 
-.header-button_style {
+/* .header-button_style {
     color: white;
     background: #16a6af;
     height: 40px;
@@ -20,8 +20,8 @@
     line-height: 16px;
     text-align: center;
     box-shadow: 0px 0px 3px 0px #0000001f;
-}
+} */
 
-.header-button_style:hover {
+/* .header-button_style:hover {
     box-shadow: 0px 3px 3px 0px #0000003d;
-}
+} */

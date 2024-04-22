@@ -86,7 +86,7 @@
     flex-direction: column;
     align-items: flex-start;
     background: rgba(234, 233, 235, 0.95);
-    padding: 35px 35px 35px 104px;
+    padding: 35px 32px 36px 104px;
     text-align: center;
     position: relative;
 }
@@ -105,27 +105,15 @@
     background-color: #bc95d6;
 }
 
-.admin-hall_container_body button {
-    font-family: "Roboto-Medium", Helvetica;
-    width: 159px;
-    height: 40px;
-    margin-right: -10px;
-    color: #ffffff;
-    border-radius: 3px;
-    box-shadow: 0px 0px 3px #0000001f;
-    background-color: #16a6af;
-    width: fit-content;
-    font-size: 14px;
-    text-align: center;
-    letter-spacing: 0;
-    line-height: 16px;
-    font-weight: 500;
-    white-space: nowrap;
-    padding: 11.2px 31.38px 11.9px 31.73px;
-    border: none;
-    cursor: pointer;
-}
 
 .admin-hall_container_body button:hover {
     box-shadow: 0px 3px 3px #0000003d;
+}
+
+.admin-yes-no__buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    align-self: stretch;
+    padding-top: 26px;
 }

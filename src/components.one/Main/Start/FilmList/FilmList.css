@@ -1,0 +1,98 @@
+.start-film-list__container {
+    margin-top: 30px;
+    background: rgba(241, 235, 230, 0.95);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 15px;
+}
+
+.start-film-list__poster {
+    width: 125px;
+    height: 175px;
+    object-fit: cover;
+}
+
+.start-film-list__container-poster-info {
+    display: flex;
+}
+
+.start-film-list__container-info-descr {
+    display: flex;
+    flex-direction: column;
+    color: rgba(0, 0, 0, 1);
+    padding-left: 15px;
+    gap: 10px;
+}
+
+.start-film-list__film-title {
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: left;
+}
+
+.start-film-list__film-info {
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+}
+
+.start-film-list__film-duration-country {
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 16px;
+    text-align: left;
+}
+
+.start-film-list__film-seances-container {
+    padding-bottom: 20px;
+}
+
+.start-film-list__film-seances-time {
+    display: flex;
+    gap: 4px;
+}
+
+.start-film-list__film-seances-time-item {
+    background-color: rgba(255, 255, 255, 1);
+    width: 53px;
+    height: 33px;
+    padding: 7.2px 7.33px 8.05px 8px;
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.12);
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+
+.start-film-list__film-seances-time-item_past {
+    color: rgba(0, 0, 0, 0.5);
+    cursor: default;
+}
+.start-film-list__film-seances-time-item_avail {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 1);
+    cursor: pointer;
+}
+
+.start-film-list__film-seances-time-item:hover {
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.24);
+}
+
+.start-film-list__hall-list-hall-name {
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: left;
+    color: rgba(0, 0, 0, 1);
+    padding-bottom: 7px;
+}
+
+@media (max-width: 768px) {
+    
+}

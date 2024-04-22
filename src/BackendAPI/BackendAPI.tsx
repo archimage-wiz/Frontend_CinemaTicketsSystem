@@ -1,14 +1,19 @@
 const backendDomainUrl = "https://shfe-diplom.neto-server.ru";
+const filmColorsArr = ["#caff85", "#85ff89", "#85ffd3", "#85e2ff", "#8599ff"];
 
 export class BackendAPI {
     private static instance: BackendAPI;
     private domain: string;
     public isAuth: boolean = false;
     private halls: [];
+    private films: [];
+    private seances: [];
     private callBacks: { [key: string]: (() => void)[] } = {};
     private constructor() {
         this.domain = backendDomainUrl;
         this.halls = [];
+        this.films = [];
+        this.seances = [];
         this.callBacks = {};
         if (localStorage.getItem("isAuth") === "true") {
             this.isAuth = true;
@@ -28,6 +33,12 @@ export class BackendAPI {
     }
     public getHalls(): [] {
         return this.halls;
+    }
+    public getFilms(): [] {
+        return this.films;
+    }
+    public getSeances(): [] {
+        return this.seances;
     }
 
     public setUpdateF(fname: string, f: () => void) {
@@ -51,6 +62,13 @@ export class BackendAPI {
         }
         this.halls = jsonData.result.halls;
         (this.callBacks?.["halls"])?.forEach(f => f());
+        this.films = jsonData.result.films;
+        this.films.map((film : {color: string}) => {
+            film["color"] = filmColorsArr[Math.floor(Math.random()*filmColorsArr.length)];
+        });
+        (this.callBacks?.["films"])?.forEach(f => f());
+        this.seances = jsonData.result.seances;
+        (this.callBacks?.["seances"])?.forEach(f => f());
         console.log(jsonData.result);
     }
 

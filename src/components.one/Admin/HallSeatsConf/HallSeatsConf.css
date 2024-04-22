@@ -69,13 +69,6 @@
     color: rgba(132, 132, 132, 1);
 }
 
-.hall-seats__buttons-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    align-self: stretch;
-}
-
 .admin-hallseats_conf_main_container {
     width: 100%;
     border: 1px solid;
@@ -109,25 +102,3 @@
     gap: 10px;
 }
 
-.admin-hallseats_conf_aloneseat {
-    width: 26px;
-    height: 26px;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-.admin-hallseats_conf_aloneseat_standart {
-    background: rgba(196, 196, 196, 1);
-    border: 1px solid rgba(57, 57, 57, 1)
-}
-
-.admin-hallseats_conf_aloneseat_vip {
-    background: rgba(196, 196, 196, 1);
-    background: url("img/vip_seat.png");
-    border: 1px solid rgba(10, 130, 138, 1)
-}
-
-.admin-hallseats_conf_aloneseat_disabled {
-    background-color: transparent;
-    border: 1px solid rgba(196, 196, 196, 1);
-}
