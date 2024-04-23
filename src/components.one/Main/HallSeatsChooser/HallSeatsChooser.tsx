@@ -1,71 +1,71 @@
 import "./HallSeatsChooser.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BackendAPI } from "../../../BackendAPI/BackendAPI";
 import { useEffect, useState } from "react";
 import { Header } from "../Header/Header";
 
 export function HallSeatsChooser() {
-    const { seanceId } = useParams();
+    const navigate = useNavigate();
+    const { seanceId, currentDate } = useParams();
     const [backend] = useState(BackendAPI.getInstance());
-    const [halls, setHalls] = useState(backend.getHalls());
-    const [films, setFilms] = useState(backend.getFilms());
-    const [seances, setSeances] = useState(backend.getSeances());
-    const [selectedSeats, setSelectedSeats] = useState<{ place: number; row: number }[]>([]);
+    const [hallConfig, setHallConfig] = useState([]);
+    const [selectedSeats, setSelectedSeats] = useState<{ place: number; row: number; seanceId: number; cost: number }[]>([]);
+    const [film, setFilm] = useState<{id?: number; film_name?: string }>({});
+    const [hall, setHall] = useState<{
+        hall_name?: string;
+        hall_open?: number;
+        id?: number;
+        hall_price_standart?: number;
+        hall_price_vip?: number;
+    }>({});
+    const [seance, setSeance] = useState<{ seance_filmid?: number; seance_hallid?: number; seance_time?: string }>({});
 
-    useEffect(() => {
-        backend.setUpdateF("halls", updateHalls);
-        backend.setUpdateF("films", updateFilms);
-        backend.setUpdateF("seances", updateSeances);
-    }, []);
-
-    function updateHalls() {
-        setHalls(backend.getHalls());
-    }
-    function updateFilms() {
-        setFilms(backend.getFilms());
-    }
-    function updateSeances() {
-        setSeances(backend.getSeances());
-    }
-
-    function filmById(id: number): { id: number; film_name: string } | undefined {
-        return films.find((film: { id: number }) => film.id === id);
-    }
-    function hallById(id: number): { id: number; hall_name: string; hall_open: number; hall_config: any } | undefined {
-        return halls.find((h: { id: number }) => h.id === id);
-    }
     function seanceById(
         id: number
     ): { id: number; seance_hallid: number; seance_filmid: number; seance_time: string } | undefined {
-        return seances.find((s: { id: number }) => s.id === id);
+        return backend.getSeances().find((s: { id: number }) => s.id === id);
+    }
+
+    useEffect(() => {
+        backend.getHallConfig(parseInt(seanceId!), currentDate!).then((data) => setHallConfig(data.result));
+        backend.setUpdateF("halls", updateHalls);
+        backend.setUpdateF("films", updateFilms);
+        backend.setUpdateF("seances", updateSeances);
+        backend.manualUpdate();
+    }, []);
+
+    function updateHalls() {
+        const s = seanceById(parseInt(seanceId!));
+        setHall(backend.getHalls().find((h: { id: number }) => h.id === s?.seance_hallid) ?? {});
+    }
+    function updateFilms() {
+        const s = seanceById(parseInt(seanceId!));
+        setFilm(backend.getFilms().find((f: { id: number }) => f.id === s?.seance_filmid) ?? {});
+    }
+    function updateSeances() {
+        const s = seanceById(parseInt(seanceId!));
+        setSeance(s ?? {});
     }
 
     function getFilmTitle() {
-        const seance = seanceById(parseInt(seanceId!));
-        const film = filmById(Number(seance?.seance_filmid));
         return film?.film_name;
     }
-    function getHallId(): number | undefined {
-        const seance = seanceById(parseInt(seanceId!));
-        return seance?.seance_hallid;
-    }
+
     function getSeanceStartTime(): string | undefined {
-        const seance = seanceById(parseInt(seanceId!));
         return seance?.seance_time;
     }
     function getHallName(): string | undefined {
-        const seance = seanceById(parseInt(seanceId!));
-        const hall = hallById(Number(seance?.seance_hallid));
         return hall?.hall_name;
     }
 
     function selectSeat(seatPosX: number, seatPosY: number) {
-        const hall = hallById(getHallId()!);
-        const hallConfig: [] = hall?.hall_config;
+        if (hallConfig.length === 0) return;
         if (hallConfig[seatPosY][seatPosX] !== "vip" && hallConfig[seatPosY][seatPosX] !== "standart") return;
         const newSeat = {
             place: seatPosX,
             row: seatPosY,
+            seanceId: parseInt(seanceId!),
+            cost: getStandartSeatPrice(hallConfig[seatPosY][seatPosX])!
         };
         if (checkIfSelected(seatPosX, seatPosY)) {
             setSelectedSeats(selectedSeats.filter((seat) => seat.place !== seatPosX || seat.row !== seatPosY));
@@ -73,17 +73,30 @@ export function HallSeatsChooser() {
         }
         setSelectedSeats([...selectedSeats, newSeat]);
     }
-
     function checkIfSelected(seatPosX: number, seatPosY: number) {
         return selectedSeats.find((seat) => seat.place === seatPosX && seat.row === seatPosY);
     }
 
+    function orderTickets(e: React.MouseEvent<HTMLButtonElement>) {
+        if (selectedSeats.length === 0) {alert("Выберите места"); return;}
+        e.currentTarget.disabled = true;
+        backend.setChosenSeats(selectedSeats);
+        navigate(`/payment/${seanceId}/${hall?.id}/${film.id}/${currentDate}`);
+    }
 
-    function HallSeats(props: { hallId: number }) {
-        if (halls.length === 0) return null;
-        const hall = hallById(props.hallId);
-        const hallConfig: [] = hall?.hall_config;
+    function getStandartSeatPrice(type: string) {
+        switch (type) {
+            case "standart":
+                return hall?.hall_price_standart;
+            case "vip":
+                return hall?.hall_price_vip;
+            default:
+                return 0;
+        }
+    }
 
+    function HallSeats() {
+        if (hallConfig.length === 0) return null;
         return (
             <>
                 {hallConfig.map((row: [], indexY) => (
@@ -120,14 +133,40 @@ export function HallSeatsChooser() {
             </header>
             <section className="HallSeatsChooser__seats-main-container">
                 <div className="HallSeatsChooser__seats">
-                    <HallSeats hallId={getHallId()!} />
+                    <HallSeats />
                 </div>
-
-                <div className="HallSeatsChooser__seats-info-container">seats descr</div>
+                <div className="HallSeatsChooser__seats-info-container">
+                    <div>
+                        <div className="HallSeatsChooser__seats-info-row">
+                            <div className="HallSeatsChooser__seat HallSeatsChooser__seat_standart"></div>
+                            <div className="HallSeatsChooser__seat_text">
+                                Свободно ({getStandartSeatPrice("standart")}руб)
+                            </div>
+                        </div>
+                        <div className="HallSeatsChooser__seats-info-row">
+                            <div className="HallSeatsChooser__seat HallSeatsChooser__seat_vip"></div>
+                            <div className="HallSeatsChooser__seat_text">
+                                Свободно VIP ({getStandartSeatPrice("vip")}руб)
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="HallSeatsChooser__seats-info-row">
+                            <div className="HallSeatsChooser__seat HallSeatsChooser__seat_taken"></div>
+                            <div className="HallSeatsChooser__seat_text">Занято</div>
+                        </div>
+                        <div className="HallSeatsChooser__seats-info-row">
+                            <div className="HallSeatsChooser__seat HallSeatsChooser__seat_selected"></div>
+                            <div className="HallSeatsChooser__seat_text">Выбрано</div>
+                        </div>
+                    </div>
+                </div>
             </section>
-            <div className="HallSeatsChooser__order-button-container">
-                <button>Забронировать</button>
-            </div>
+            <footer className="HallSeatsChooser__order-footer-container">
+                <button className="standart-button" onClick={orderTickets}>
+                    Забронировать
+                </button>
+            </footer>
         </>
     );
 }

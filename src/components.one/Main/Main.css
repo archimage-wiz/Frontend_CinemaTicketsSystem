@@ -7,6 +7,7 @@
     color: #fff;
     min-width: 390px;
     padding-bottom: 25px;
+    min-height: 100vh;
 }
 
 .main-content_container {

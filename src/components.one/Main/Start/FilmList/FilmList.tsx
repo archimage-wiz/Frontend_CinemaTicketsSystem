@@ -15,7 +15,7 @@ export function FilmList(props: { date: Date }) {
         backend.setUpdateF("halls", updateHalls);
         backend.setUpdateF("films", updateFilms);
         backend.setUpdateF("seances", updateSeances);
-        displayDate;
+        backend.manualUpdate();
     }, []);
 
     function updateHalls() {
@@ -105,7 +105,7 @@ export function FilmList(props: { date: Date }) {
                                     ) : (
                                         <Link
                                             key={crypto.randomUUID()}
-                                            to={`/hall/${seance.id}`}
+                                            to={`/hall/${seance.id}/${displayDate.toISOString().split("T")[0]}`}
                                             className="start-film-list__film-seances-time-item start-film-list__film-seances-time-item_avail "
                                         >
                                             {seance.time}
