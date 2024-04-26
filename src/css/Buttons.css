@@ -17,6 +17,7 @@
     display: flex;
     align-items: center;
     transition: box-shadow 0.15s ease-in-out;
+    box-sizing: border-box;
 }
 .standart-button:hover {
     box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.24);
@@ -40,6 +41,7 @@
     text-transform: uppercase;
     cursor: pointer;
     transition: box-shadow 0.15s ease-in-out;
+    box-sizing: border-box;
 }
 .cancel-button:hover {
     box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.24);

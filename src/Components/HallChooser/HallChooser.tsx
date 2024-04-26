@@ -8,10 +8,10 @@ export function HallChooser(props: { chooseHallF: (n: number) => void }) {
     const [chosenHall, setChosenHall] = useState(0);
 
     useEffect(() => {
-        backend.setUpdateF("halls", updateHalls);
+        backend.subscribeHallsUpdate(updateHalls);
     }, []);
-    function updateHalls() {
-        setHalls(backend.getHalls());
+    function updateHalls(halls: []) {
+        setHalls(halls);
     }
 
     function chooseHall(hall: number) {

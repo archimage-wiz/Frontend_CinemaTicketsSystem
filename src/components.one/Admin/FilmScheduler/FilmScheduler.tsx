@@ -10,18 +10,18 @@ export function FilmScheduler() {
     const [seances, setSeances] = useState(backend.getSeances());
 
     useEffect(() => {
-        backend.setUpdateF("halls", updateHalls);
-        backend.setUpdateF("films", updateFilms);
-        backend.setUpdateF("seances", updateSeances);
+        backend.subscribeHallsUpdate(updateHalls);
+        backend.subscribeFilmsUpdate(updateFilms);
+        backend.subscribeSeancesUpdate(updateSeances);
     }, []);
     function updateHalls() {
-        setHalls(backend.getHalls());
+        setHalls(halls);
     }
     function updateFilms() {
-        setFilms(backend.getFilms());
+        setFilms(films);
     }
-    function updateSeances() {
-        setSeances(backend.getSeances());
+    function updateSeances(seances: []) {
+        setSeances(seances);
     }
 
     function filmById(id: number): { film_name: string; color: string } | undefined {

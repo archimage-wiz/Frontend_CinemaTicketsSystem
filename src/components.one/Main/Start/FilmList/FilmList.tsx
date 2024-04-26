@@ -7,29 +7,28 @@ import { Link } from "react-router-dom";
 export function FilmList(props: { date: Date }) {
     const displayDate = props.date;
     const [backend] = useState(BackendAPI.getInstance());
-    const [halls, setHalls] = useState(backend.getHalls());
-    const [films, setFilms] = useState(backend.getFilms());
-    const [seances, setSeances] = useState(backend.getSeances());
+    const [halls, setHalls] = useState([]);
+    const [films, setFilms] = useState([]);
+    const [seances, setSeances] = useState([]);
 
     useEffect(() => {
-        backend.setUpdateF("halls", updateHalls);
-        backend.setUpdateF("films", updateFilms);
-        backend.setUpdateF("seances", updateSeances);
-        backend.manualUpdate();
+        backend.subscribeHallsUpdate(updateHalls);
+        backend.subscribeFilmsUpdate(updateFilms);
+        backend.subscribeSeancesUpdate(updateSeances);
     }, []);
 
-    function updateHalls() {
-        setHalls(backend.getHalls());
+    function updateHalls(halls: []) {
+        setHalls(halls);
     }
-    function updateFilms() {
-        setFilms(backend.getFilms());
+    function updateFilms(films: []) {
+        setFilms(films);
     }
-    function updateSeances() {
-        setSeances(backend.getSeances());
+    function updateSeances(seances: []) {
+        setSeances(seances);
     }
 
     function filmById(id: number): { film_name: string } | undefined {
-        return films.find((film: { id: number }) => film.id === id);
+        return films?.find((film: { id: number }) => film.id === id);
     }
     function hallById(id: number): { hall_name: string; hall_open: number } | undefined {
         return halls.find((h: { id: number }) => h.id === id);
@@ -41,7 +40,7 @@ export function FilmList(props: { date: Date }) {
 
     function FilmsData(): FilmDataType {
         const filmData: FilmDataType = {};
-        seances.forEach((seance: { id: number; seance_hallid: number; seance_filmid: number; seance_time: string }) => {
+        seances?.forEach((seance: { id: number; seance_hallid: number; seance_filmid: number; seance_time: string }) => {
             const film = filmById(seance.seance_filmid);
             const hall = hallById(seance.seance_hallid);
             if (!filmData[seance.seance_filmid]) {

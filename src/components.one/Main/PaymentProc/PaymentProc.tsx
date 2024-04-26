@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 export function PaymentProc() {
     const navigate = useNavigate();
     const [backend] = useState(BackendAPI.getInstance());
-    const { seanceId, hallId, filmId, currentDate} = useParams();
+    const { seanceId, hallId, filmId, currentDate } = useParams();
     const [film, setFilm] = useState<{ id?: number; film_name?: string }>({});
     const [hall, setHall] = useState<{ id?: number; hall_name?: string; hall_open?: number }>({});
     const [seance, setSeance] = useState<{
@@ -18,23 +18,25 @@ export function PaymentProc() {
     }>({});
     const [seats, setSeats] = useState<chosenSeats[]>([]);
 
-    function filmById(id: number): { id: number; film_name: string } | undefined {
-        return backend.getFilms().find((film: { id: number }) => film.id === id);
-    }
-
     useEffect(() => {
-        console.log("useEffect");
-        const film = filmById(Number(filmId));
-        const hall = backend.getHalls().find((h: { id: number }) => h.id === Number(hallId));
-        const seance = backend.getSeances().find((s: { id: number }) => s.id === Number(seanceId));
-        if (film === undefined || hall === undefined || seance === undefined) {
+        setSeats(backend.getSeats() ?? []);
+        if (filmId === undefined || hallId === undefined || seanceId === undefined || backend.getSeats().length === 0) {
             navigate("/");
         }
-        setFilm(film ?? {});
-        setHall(hall ?? {});
-        setSeance(seance ?? {});
-        setSeats(backend.getSeats() ?? []);
+        backend.subscribeHallsUpdate(updateHalls);
+        backend.subscribeFilmsUpdate(updateFilms);
+        backend.subscribeSeancesUpdate(updateSeances);
     }, []);
+
+    function updateSeances(seances: []) {
+        setSeance(seances.find((s: { id: number }) => s.id === Number(seanceId)) ?? {});
+    }
+    function updateHalls(halls: []) {
+        setHall(halls.find((h: { id: number }) => h.id === Number(hallId)) ?? {});
+    }
+    function updateFilms(films: []) {
+        setFilm(films.find((f: { id: number }) => f.id === Number(filmId)) ?? {});
+    }
 
     function getSeats() {
         return seats.map((s) => s.place + 1).join(", ");

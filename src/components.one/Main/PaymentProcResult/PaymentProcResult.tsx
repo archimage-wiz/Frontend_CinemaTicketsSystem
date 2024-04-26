@@ -28,7 +28,7 @@ export function PaymentProcResult() {
         const film = filmById(Number(filmId));
         const hall = backend.getHalls().find((h: { id: number }) => h.id === Number(hallId));
         const seance = backend.getSeances().find((s: { id: number }) => s.id === Number(seanceId));
-        if (film === undefined || hall === undefined || seance === undefined) {
+        if (film === undefined || hall === undefined || seance === undefined || backend.getSeats().length === 0) {
             navigate("/");
         }
         setFilm(film ?? {});

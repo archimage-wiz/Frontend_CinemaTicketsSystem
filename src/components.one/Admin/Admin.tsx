@@ -23,9 +23,9 @@ export function Admin() {
                         <>
                             <HallSet />
                             <HallSeatsConf />
-                            <HallPriceConf />
+                            {/* <HallPriceConf />
                             <FilmScheduler />
-                            <HallOpenCloseConf />
+                            <HallOpenCloseConf /> */}
                         </>
                     ) : (
                         <Login setAuth={setAuth} />

@@ -9,8 +9,10 @@ export function HallSeatsChooser() {
     const { seanceId, currentDate } = useParams();
     const [backend] = useState(BackendAPI.getInstance());
     const [hallConfig, setHallConfig] = useState([]);
-    const [selectedSeats, setSelectedSeats] = useState<{ place: number; row: number; seanceId: number; cost: number }[]>([]);
-    const [film, setFilm] = useState<{id?: number; film_name?: string }>({});
+    const [selectedSeats, setSelectedSeats] = useState<
+        { place: number; row: number; seanceId: number; cost: number }[]
+    >([]);
+    const [film, setFilm] = useState<{ id?: number; film_name?: string }>({});
     const [hall, setHall] = useState<{
         hall_name?: string;
         hall_open?: number;
@@ -20,37 +22,31 @@ export function HallSeatsChooser() {
     }>({});
     const [seance, setSeance] = useState<{ seance_filmid?: number; seance_hallid?: number; seance_time?: string }>({});
 
-    function seanceById(
-        id: number
-    ): { id: number; seance_hallid: number; seance_filmid: number; seance_time: string } | undefined {
+    useEffect(() => {
+        backend.subscribeSeancesUpdate(updateSeances);
+        backend.subscribeHallsUpdate(updateHalls);
+        backend.subscribeFilmsUpdate(updateFilms);
+        backend.getHallConfig(parseInt(seanceId!), currentDate!).then((data) => setHallConfig(data.result));
+    }, []);
+
+    function seanceById(id: number): { seance_filmid: number; seance_hallid: number; seance_time: string } | undefined {
         return backend.getSeances().find((s: { id: number }) => s.id === id);
     }
 
-    useEffect(() => {
-        backend.getHallConfig(parseInt(seanceId!), currentDate!).then((data) => setHallConfig(data.result));
-        backend.setUpdateF("halls", updateHalls);
-        backend.setUpdateF("films", updateFilms);
-        backend.setUpdateF("seances", updateSeances);
-        backend.manualUpdate();
-    }, []);
-
-    function updateHalls() {
-        const s = seanceById(parseInt(seanceId!));
-        setHall(backend.getHalls().find((h: { id: number }) => h.id === s?.seance_hallid) ?? {});
+    function updateHalls(halls: []) {
+        setHall(halls.find((h: { id: number }) => h.id === seanceById(Number(seanceId))?.seance_hallid) ?? {});
     }
-    function updateFilms() {
-        const s = seanceById(parseInt(seanceId!));
-        setFilm(backend.getFilms().find((f: { id: number }) => f.id === s?.seance_filmid) ?? {});
+    function updateFilms(films: []) {
+        setFilm(films.find((f: { id: number }) => f.id === seanceById(Number(seanceId))?.seance_filmid) ?? {});
     }
-    function updateSeances() {
-        const s = seanceById(parseInt(seanceId!));
+    function updateSeances(seances: []) {
+        const s = seances.find((s: { id: number }) => s.id === Number(seanceId));
         setSeance(s ?? {});
     }
 
     function getFilmTitle() {
         return film?.film_name;
     }
-
     function getSeanceStartTime(): string | undefined {
         return seance?.seance_time;
     }
@@ -65,7 +61,7 @@ export function HallSeatsChooser() {
             place: seatPosX,
             row: seatPosY,
             seanceId: parseInt(seanceId!),
-            cost: getStandartSeatPrice(hallConfig[seatPosY][seatPosX])!
+            cost: getStandartSeatPrice(hallConfig[seatPosY][seatPosX])!,
         };
         if (checkIfSelected(seatPosX, seatPosY)) {
             setSelectedSeats(selectedSeats.filter((seat) => seat.place !== seatPosX || seat.row !== seatPosY));
@@ -78,7 +74,10 @@ export function HallSeatsChooser() {
     }
 
     function orderTickets(e: React.MouseEvent<HTMLButtonElement>) {
-        if (selectedSeats.length === 0) {alert("Выберите места"); return;}
+        if (selectedSeats.length === 0) {
+            alert("Выберите места");
+            return;
+        }
         e.currentTarget.disabled = true;
         backend.setChosenSeats(selectedSeats);
         navigate(`/payment/${seanceId}/${hall?.id}/${film.id}/${currentDate}`);

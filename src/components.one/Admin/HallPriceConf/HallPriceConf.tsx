@@ -1,5 +1,4 @@
 import "./HallPriceConf.css";
-import "../../../css/Seats.css";
 import { useState } from "react";
 import { HallChooser } from "../../../components/HallChooser/HallChooser";
 

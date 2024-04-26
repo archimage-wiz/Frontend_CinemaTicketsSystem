@@ -6,23 +6,21 @@ export type chosenSeats = {
     row: number;
     seanceId: number;
     cost: number;
-}
+};
 
 export class BackendAPI {
     private static instance: BackendAPI;
     private domain: string;
     public isAuth: boolean = false;
-    private halls: [];
-    private films: [];
-    private seances: [];
-    private callBacks: { [key: string]: (() => void)[] } = {};
+    private halls: [] = [];
+    private films: [] = [];
+    private seances: [] = [];
+    private onUpdateHalls: ((halls: []) => void)[] = [];
+    private onUpdateFilms: ((films: []) => void)[] = [];
+    private onUpdateSeances: ((seances: []) => void)[] = [];
     private chosenSeats: chosenSeats[] = [];
     private constructor() {
         this.domain = backendDomainUrl;
-        this.halls = [];
-        this.films = [];
-        this.seances = [];
-        this.callBacks = {};
         if (localStorage.getItem("isAuth") === "true") {
             this.isAuth = true;
         }
@@ -39,6 +37,9 @@ export class BackendAPI {
     public getDomain(): string {
         return this.domain;
     }
+    public getSeats(): chosenSeats[] {
+        return this.chosenSeats;
+    }
     public getHalls(): [] {
         return this.halls;
     }
@@ -48,22 +49,30 @@ export class BackendAPI {
     public getSeances(): [] {
         return this.seances;
     }
-    public getSeats(): chosenSeats[] {
-        return this.chosenSeats;
+
+    public subscribeHallsUpdate(f: (halls: []) => void) {
+        if (!this.onUpdateHalls.includes(f)) {
+            this.onUpdateHalls.push(f);
+        }
+        f(this.halls);
+    }
+    public subscribeFilmsUpdate(f: (films: []) => void) {
+        if (!this.onUpdateFilms.includes(f)) {
+            this.onUpdateFilms.push(f);
+        }
+        f(this.films);
+    }
+    public subscribeSeancesUpdate(f: (seances: []) => void) {
+        if (!this.onUpdateSeances.includes(f)) {
+            this.onUpdateSeances.push(f);
+        }
+        f(this.seances);
     }
 
-    public setUpdateF(fname: string, f: () => void) {
-        if (!this.callBacks[fname]) {
-            this.callBacks[fname] = [];
-        }
-        if (!this.callBacks[fname].includes(f)) {
-            this.callBacks[fname].push(f);
-        }
-    }
-    public manualUpdate() {
-        this.callBacks?.["halls"]?.forEach((f) => f());
-        this.callBacks?.["films"]?.forEach((f) => f());
-        this.callBacks?.["seances"]?.forEach((f) => f());
+    public globalUpdate() {
+        this.onUpdateHalls.forEach((f) => f(this.halls));
+        this.onUpdateFilms.forEach((f) => f(this.films));
+        this.onUpdateSeances.forEach((f) => f(this.seances));
     }
 
     private alertErrorReload(err: string) {
@@ -86,11 +95,11 @@ export class BackendAPI {
             film["color"] = filmColorsArr[Math.floor(Math.random() * filmColorsArr.length)];
         });
         this.seances = jsonData.result.seances;
-        this.manualUpdate();
+        this.globalUpdate();
         console.log(jsonData.result);
     }
 
-    getHallConfig(seanceId: number, date: string) {
+    async getHallConfig(seanceId: number, date: string) {
         return fetch(this.domain + "/hallconfig?" + `seanceId=${seanceId}&date=${date}`).then((response) =>
             response.json()
         );
@@ -146,13 +155,28 @@ export class BackendAPI {
             alert(res.statusText);
             return;
         }
-        // console.log(res);
         const jsonData = await res.json();
-        // console.log(jsonData);
         if (jsonData.success === true) {
             this.refreshAllData();
         } else {
             alert("Error: " + jsonData.error);
         }
+    }
+
+    public async saveHallConfig(hallId: number, rowCount: number, placeCount: number, hallConfig: any[]): Promise<void> {
+        const params = new FormData();
+        params.set("rowCount", String(rowCount));
+        params.set("placeCount", String(placeCount));
+        params.set("config", JSON.stringify(hallConfig));
+        console.log(params);
+        const res = await fetch(this.domain + "/hall/" + hallId, {
+            method: "POST",
+            body: params,
+        })
+        if (!res.ok) {
+            alert(res.statusText);
+            return;
+        }
+        return await res.json();
     }
 }

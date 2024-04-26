@@ -11,10 +11,10 @@ export function HallSet() {
     const [visible, setVisible] = useState(true);
 
     useEffect(() => {
-        backend.setUpdateF("halls", updateHalls);
+        backend.subscribeHallsUpdate(updateHalls);
     }, []);
-    function updateHalls() {
-        setHalls(backend.getHalls());
+    function updateHalls(halls: []) {
+        setHalls(halls);
     }
 
     function showAddHall() {
@@ -53,7 +53,7 @@ export function HallSet() {
                             </div>
                         ))}
                     </div>
-                    <button onClick={showAddHall}>СОЗДАТЬ ЗАЛ</button>
+                    <button onClick={showAddHall} className="standart-button">СОЗДАТЬ ЗАЛ</button>
                 </section>
             </div>
             {showAdd ? <HallAddPopup closeFunc={hideAddHall} /> : null}
