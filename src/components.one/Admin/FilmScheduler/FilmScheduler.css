@@ -124,3 +124,11 @@
     color: rgba(132, 132, 132, 1);
 
 }
+
+.FilmScheduler__buttons-container {
+    display: flex;
+    width: 100%;
+    gap: 15px;
+    justify-content: center;
+    padding-top: 52px;
+}

@@ -56,17 +56,26 @@ export class BackendAPI {
         }
         f(this.halls);
     }
+    public unsubscribeHallsUpdate(f: (halls: []) => void) {
+        this.onUpdateHalls = this.onUpdateHalls.filter((item) => item !== f);
+    }
     public subscribeFilmsUpdate(f: (films: []) => void) {
         if (!this.onUpdateFilms.includes(f)) {
             this.onUpdateFilms.push(f);
         }
         f(this.films);
     }
+    public unsubscribeFilmsUpdate(f: (films: []) => void) {
+        this.onUpdateFilms = this.onUpdateFilms.filter((item) => item !== f);
+    }
     public subscribeSeancesUpdate(f: (seances: []) => void) {
         if (!this.onUpdateSeances.includes(f)) {
             this.onUpdateSeances.push(f);
         }
         f(this.seances);
+    }
+    public unsubscribeSeancesUpdate(f: (seances: []) => void) {
+        this.onUpdateSeances = this.onUpdateSeances.filter((item) => item !== f);
     }
 
     public globalUpdate() {
@@ -79,7 +88,6 @@ export class BackendAPI {
         alert(err);
         window.location.reload();
     }
-
     private async refreshAllData() {
         const res = await fetch(this.domain + "/alldata");
         if (!res.ok) {
@@ -98,17 +106,14 @@ export class BackendAPI {
         this.globalUpdate();
         console.log(jsonData.result);
     }
-
     async getHallConfig(seanceId: number, date: string) {
         return fetch(this.domain + "/hallconfig?" + `seanceId=${seanceId}&date=${date}`).then((response) =>
             response.json()
         );
     }
-
     setChosenSeats(seats: { place: number; row: number; seanceId: number; cost: number }[]) {
         this.chosenSeats = seats;
     }
-
     public async authentication(data: FormData, changeStateF: (state: boolean) => void): Promise<void> {
         const res = await fetch(this.domain + "/login", {
             method: "POST",
@@ -146,6 +151,28 @@ export class BackendAPI {
             alert("Error: " + jsonData.error);
         }
     }
+    public async addFilm(data: FormData, onLoadCallBack: ()=>void): Promise<void> {
+        for (const pair of data.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", this.domain + "/film", true);
+        xhr.responseType = 'json';
+        xhr.onload = () => {
+            console.log(xhr.response);
+            // console.log(xhr.responseText);
+            console.log(xhr.status);
+            onLoadCallBack()
+        };
+        xhr.upload.onerror = function () {
+            alert(`Произошла ошибка во время отправки: ${xhr.status}`);
+        };
+        xhr.onprogress = function(event) {
+            console.log(`Загружено ${event.loaded} из ${event.total}`);
+          };
+        xhr.send(data);
+
+    }
     public async deleteHall(id: number): Promise<void> {
         if (!this.isAuth) return;
         const res = await fetch(this.domain + "/hall/" + id, {
@@ -162,21 +189,46 @@ export class BackendAPI {
             alert("Error: " + jsonData.error);
         }
     }
-
-    public async saveHallConfig(hallId: number, rowCount: number, placeCount: number, hallConfig: any[]): Promise<void> {
+    public async saveHallConfig(
+        hallId: number,
+        rowCount: number,
+        placeCount: number,
+        hallConfig: any[]
+    ): Promise<void> {
         const params = new FormData();
         params.set("rowCount", String(rowCount));
         params.set("placeCount", String(placeCount));
         params.set("config", JSON.stringify(hallConfig));
-        console.log(params);
         const res = await fetch(this.domain + "/hall/" + hallId, {
             method: "POST",
             body: params,
-        })
+        });
         if (!res.ok) {
             alert(res.statusText);
             return;
         }
         return await res.json();
+    }
+    public async saveSeatsPrice(hallId: number, priceStandart: number, priceVip: number): Promise<void> {
+        const params = new FormData();
+        params.set("priceStandart", String(priceStandart));
+        params.set("priceVip", String(priceVip));
+        const res = await fetch(this.domain + "/price/" + hallId, {
+            method: "POST",
+            body: params,
+        });
+        if (!res.ok) {
+            alert(res.statusText);
+            return;
+        }
+        const jsonData = await res.json();
+        if (jsonData.success === true) {
+            return await new Promise((resolve, reject) => {
+                this.halls = this.halls.map((hall) => (hall.id === hallId ? jsonData.result : hall));
+                resolve(jsonData.result);
+            });
+        } else {
+            alert("Error: " + jsonData.error);
+        }
     }
 }

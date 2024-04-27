@@ -2,33 +2,32 @@ import "./FilmScheduler.css";
 import { useEffect, useState } from "react";
 import { BackendAPI } from "../../../BackendAPI/BackendAPI";
 import { minutesSpellingTransform } from "../../../components/CommonFunctions/CommonFunctions";
+import { FilmAddPopup } from "./FilmAddPopup/FilmAddPopup";
 
 export function FilmScheduler() {
-    const [backend] = useState(BackendAPI.getInstance());
+    const backend = BackendAPI.getInstance();
     const [halls, setHalls] = useState(backend.getHalls());
     const [films, setFilms] = useState(backend.getFilms());
     const [seances, setSeances] = useState(backend.getSeances());
+    const [showAdd, setShowAdd] = useState(false);
 
     useEffect(() => {
-        backend.subscribeHallsUpdate(updateHalls);
-        backend.subscribeFilmsUpdate(updateFilms);
-        backend.subscribeSeancesUpdate(updateSeances);
+        getHalls();
+        getFilms();
+        getSeances();
     }, []);
-    function updateHalls() {
-        setHalls(halls);
-    }
-    function updateFilms() {
-        setFilms(films);
-    }
-    function updateSeances(seances: []) {
-        setSeances(seances);
-    }
+    const getHalls = () => (backend.getHalls().length > 0 ? setHalls(backend.getHalls()) : setTimeout(getHalls, 500));
+    const getFilms = () => (backend.getFilms().length > 0 ? setFilms(backend.getFilms()) : setTimeout(getFilms, 500));
+    const getSeances = () =>
+        backend.getSeances().length > 0 ? setSeances(backend.getSeances()) : setTimeout(getSeances, 500);
 
     function filmById(id: number): { film_name: string; color: string } | undefined {
         return films.find((film: { id: number }) => film.id === id);
     }
 
-
+    function toggleAddPopup() {
+        setShowAdd(!showAdd);
+    }
 
     return (
         <>
@@ -38,7 +37,7 @@ export function FilmScheduler() {
                     <div className="admin-hall_title_close"></div>
                 </header>
                 <section className="admin-hall_container_body admin-hall_container_body_linedecorator">
-                    <input type="submit" value="Добавить фильм" className="standart-button" />
+                    <input type="submit" value="Добавить фильм" className="standart-button" onClick={toggleAddPopup} />
 
                     <div className="film-seances__film-chooser_container">
                         {films.map(
@@ -53,17 +52,11 @@ export function FilmScheduler() {
                                     className="film-seances__film-chooser-item"
                                     style={{ backgroundColor: film.color }}
                                 >
-                                    <img
-                                        src={film.film_poster}
-                                        className="film-seances__film-chooser-poster"
-                                    ></img>
+                                    <img src={film.film_poster} className="film-seances__film-chooser-poster"></img>
                                     <div className="film-seances__film-chooser-info">
-                                        <div className="film-seances__film-chooser-title">
-                                            {film.film_name}
-                                        </div>
+                                        <div className="film-seances__film-chooser-title">{film.film_name}</div>
                                         <div className="film-seances__film-chooser-duration">
-                                            {film.film_duration}{" "}
-                                            {minutesSpellingTransform(Number(film.film_duration))}
+                                            {film.film_duration} {minutesSpellingTransform(Number(film.film_duration))}
                                         </div>
                                     </div>
                                 </div>
@@ -73,13 +66,8 @@ export function FilmScheduler() {
 
                     <div className="film-seances__seance-scheduler_container">
                         {halls.map((hall: { id: number; hall_name: string }) => (
-                            <div
-                                key={crypto.randomUUID()}
-                                className="film-seances__hall-item_container"
-                            >
-                                <div className="film-seances__seance-scheduler-title">
-                                    {hall.hall_name}
-                                </div>
+                            <div key={crypto.randomUUID()} className="film-seances__hall-item_container">
+                                <div className="film-seances__seance-scheduler-title">{hall.hall_name}</div>
                                 <div className="film-seances__seance-scheduler-seances">
                                     {seances.map(
                                         (seance: {
@@ -92,13 +80,13 @@ export function FilmScheduler() {
                                                     key={crypto.randomUUID()}
                                                     className="film-seances__seance-scheduler-seance"
                                                     style={{
-                                                        backgroundColor: filmById(
-                                                            seance.seance_filmid
-                                                        )?.color,
+                                                        backgroundColor: filmById(seance.seance_filmid)?.color,
                                                     }}
                                                 >
                                                     <div>{filmById(seance.seance_filmid)?.film_name}</div>
-                                                    <div className="film-seances__seance-scheduler-time">{seance.seance_time}</div>
+                                                    <div className="film-seances__seance-scheduler-time">
+                                                        {seance.seance_time}
+                                                    </div>
                                                 </div>
                                             ) : null
                                     )}
@@ -107,12 +95,13 @@ export function FilmScheduler() {
                         ))}
                     </div>
 
-                    <div className="admin-yes-no__buttons-container">
-                        <input type="submit" value="Отмена" className="cancel-button" />
+                    <div className="FilmScheduler__buttons-container">
+                        <input type="button" value="Отмена" className="cancel-button" />
                         <input type="submit" value="Сохранить" className="standart-button" />
                     </div>
                 </section>
             </div>
+            {showAdd ? <FilmAddPopup closeFunc={toggleAddPopup} /> : null}
         </>
     );
 }
