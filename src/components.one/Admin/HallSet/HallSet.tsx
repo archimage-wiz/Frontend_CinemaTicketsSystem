@@ -24,8 +24,8 @@ export function HallSet() {
         setShowAdd(false);
     }
 
-    function deleteHall(hall: number) {
-        backend.deleteHall(hall);
+    function deleteHall(hallId: number) {
+        backend.deleteHall(hallId);
     }
 
     function toggleVisibility() {
@@ -45,11 +45,11 @@ export function HallSet() {
                 >
                     <div>Доступные залы:</div>
                     <div className="hall-set">
-                        {halls?.map((hall: { hall_name: string }, index) => (
+                        {halls?.map((hall: {id:number, hall_name: string }, index) => (
                             <div className="admin-hallset_list_item" key={crypto.randomUUID()}>
                                 <div>–</div>
                                 <div>{hall.hall_name}</div>
-                                <div className="admin-hall_delete_button" onClick={() => deleteHall(index)}></div>
+                                <div className="admin-hall_delete_button" onClick={() => deleteHall(hall.id)}></div>
                             </div>
                         ))}
                     </div>

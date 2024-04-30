@@ -9,14 +9,15 @@ export function HallPriceConf() {
     const [halls, setHalls] = useState(backend.getHalls());
     const [standartSeatPrice, setStandartSeatPrice] = useState(0);
     const [vipSeatPrice, setVipSeatPrice] = useState(0);
-    const sendButton = useRef<HTMLButtonElement>(null);
+    const sendButton = useRef<HTMLInputElement | null>(null);
+
 
     useEffect(() => {
         backend.subscribeHallsUpdate(updateHalls);
         return () => {
             backend.unsubscribeHallsUpdate(updateHalls);
         };
-    }, []);
+    }, [backend]);
     function updateHalls(hallsData: []) {
         setHalls(() => hallsData);
         setStandartSeatPrice(() => {
@@ -96,7 +97,13 @@ export function HallPriceConf() {
                     </label>
                     <div className="HallPriceConf__buttons-container">
                         <input type="button" value="Отмена" className="cancel-button" onClick={restorePrice} />
-                        <input type="button" value="Сохранить" className="standart-button" onClick={savePrice} ref={sendButton}/>
+                        <input
+                            type="button"
+                            value="Сохранить"
+                            className="standart-button"
+                            onClick={savePrice}
+                            ref={sendButton}
+                        />
                     </div>
                 </section>
             </div>

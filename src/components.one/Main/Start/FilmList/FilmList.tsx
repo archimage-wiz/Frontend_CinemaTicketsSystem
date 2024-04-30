@@ -62,7 +62,7 @@ export function FilmList(props: { date: Date }) {
                 );
             }
         });
-        // console.log(filmData);
+        console.log(filmData);
         return filmData;
     }
 

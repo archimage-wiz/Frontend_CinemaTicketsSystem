@@ -132,7 +132,6 @@ export class BackendAPI {
             this.alertErrorReload(res.statusText);
         }
     }
-
     public async addHall(data: FormData, callBackF: () => void): Promise<void> {
         if (!this.isAuth) return;
         const res = await fetch(this.domain + "/hall", {
@@ -151,31 +150,53 @@ export class BackendAPI {
             alert("Error: " + jsonData.error);
         }
     }
-    public async addFilm(data: FormData, onLoadCallBack: ()=>void): Promise<void> {
-        for (const pair of data.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
+    public async addFilm(data: FormData, onLoadCallBack: () => void): Promise<void> {
         const xhr = new XMLHttpRequest();
         xhr.open("POST", this.domain + "/film", true);
-        xhr.responseType = 'json';
+        xhr.responseType = "json";
         xhr.onload = () => {
-            console.log(xhr.response);
-            // console.log(xhr.responseText);
-            console.log(xhr.status);
-            onLoadCallBack()
+            onLoadCallBack();
         };
         xhr.upload.onerror = function () {
             alert(`Произошла ошибка во время отправки: ${xhr.status}`);
         };
-        xhr.onprogress = function(event) {
+        xhr.onprogress = function (event) {
             console.log(`Загружено ${event.loaded} из ${event.total}`);
-          };
+        };
         xhr.send(data);
-
     }
-    public async deleteHall(id: number): Promise<void> {
+    public async addSeance(data: FormData, onLoadCallBack: () => void): Promise<void> {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", this.domain + "/seance", true);
+        xhr.responseType = "json";
+        xhr.onload = () => {
+            console.log(xhr.response);
+            onLoadCallBack();
+        };
+        xhr.upload.onerror = function () {
+            alert(`Произошла ошибка во время отправки: ${xhr.status}`);
+        };
+        xhr.send(data);
+    }
+    public async deleteHall(hallId: number): Promise<void> {
         if (!this.isAuth) return;
-        const res = await fetch(this.domain + "/hall/" + id, {
+        const res = await fetch(this.domain + "/hall/" + hallId, {
+            method: "DELETE",
+        });
+        if (!res.ok) {
+            alert(res.statusText);
+            return;
+        }
+        const jsonData = await res.json();
+        if (jsonData.success === true) {
+            this.refreshAllData();
+        } else {
+            alert("Error: " + jsonData.error);
+        }
+    }
+    public async deleteSeance(seanceId: number): Promise<void> {
+        if (!this.isAuth) return;
+        const res = await fetch(this.domain + "/seance/" + seanceId, {
             method: "DELETE",
         });
         if (!res.ok) {
@@ -227,6 +248,25 @@ export class BackendAPI {
                 this.halls = this.halls.map((hall) => (hall.id === hallId ? jsonData.result : hall));
                 resolve(jsonData.result);
             });
+        } else {
+            alert("Error: " + jsonData.error);
+        }
+    }
+    public async openCloseHall(hallId: number, status: number): Promise<void> {
+        if (!this.isAuth) return;
+        const params = new FormData();
+        params.set("hallOpen", String(status));
+        const res = await fetch(this.domain + "/open/" + hallId, {
+            method: "POST",
+            body: params,
+        });
+        if (!res.ok) {
+            alert(res.statusText);
+            return;
+        }
+        const jsonData = await res.json();
+        if (jsonData.success === true) {
+            this.refreshAllData();
         } else {
             alert("Error: " + jsonData.error);
         }
