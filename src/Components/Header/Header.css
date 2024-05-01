@@ -1,0 +1,10 @@
+.MainHeader__container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 390px;
+    box-sizing: border-box;
+    padding: 14px;
+}
+
+

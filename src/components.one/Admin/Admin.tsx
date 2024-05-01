@@ -1,4 +1,4 @@
-import "../../css/Admin.css";
+import "./Admin.css";
 import "../../css/PopUp.css";
 import { BackendAPI } from "../../BackendAPI/BackendAPI.tsx";
 import { Login } from "./Login/Login";
@@ -16,8 +16,8 @@ export function Admin() {
 
     return (
         <>
-            <div className="admin-main-bg">
-                <div className="admin-main">
+            <div className="AdminMain__background">
+                <div className="AdminMain__container">
                     <Header />
                     {isAuth ? (
                         <>

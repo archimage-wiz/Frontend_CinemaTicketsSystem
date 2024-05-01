@@ -1,8 +1,8 @@
-import "../../../css/AdminHallConf.css";
 import "./HallSet.css";
 import { BackendAPI } from "../../../BackendAPI/BackendAPI.tsx";
 import { useEffect, useState } from "react";
 import { HallAddPopup } from "./HallAddPopup/HallAddPopup";
+import { HallType } from "../../../Types/Hall.ts";
 
 export function HallSet() {
     const [backend] = useState(BackendAPI.getInstance());
@@ -13,7 +13,7 @@ export function HallSet() {
     useEffect(() => {
         backend.subscribeHallsUpdate(updateHalls);
     }, []);
-    function updateHalls(halls: []) {
+    function updateHalls(halls: HallType[]) {
         setHalls(halls);
     }
 
@@ -34,22 +34,22 @@ export function HallSet() {
 
     return (
         <>
-            <div className="admin-hall_container">
-                <header className="admin-hall_title admin-hall_title_linedecorator">
+            <div className="AdminSection__container">
+                <header className="AdminSection__header AdminSection__header-linedecorator">
                     <div>УПРАВЛЕНИЕ ЗАЛАМИ</div>
-                    <div className="admin-hall_title_close" onClick={toggleVisibility}></div>
+                    <div className="AdminSection__header-close-button" onClick={toggleVisibility}></div>
                 </header>
                 <section
-                    className={`admin-hall_container_body admin-hall_container_body_linedecorator
-                ${visible === true ? "" : "admin-hall_container_body_hidden"}`}
+                    className={`AdminSection__body-container AdminSection__body-container_linedecorator
+                ${visible === true ? "" : "AdminSection__body-container_hidden"}`}
                 >
                     <div>Доступные залы:</div>
-                    <div className="hall-set">
-                        {halls?.map((hall: {id:number, hall_name: string }, index) => (
-                            <div className="admin-hallset_list_item" key={crypto.randomUUID()}>
+                    <div className="HallSet__list-container">
+                        {halls?.map((hall: {id:number, hall_name: string }) => (
+                            <div className="HallSet__list-item" key={crypto.randomUUID()}>
                                 <div>–</div>
                                 <div>{hall.hall_name}</div>
-                                <div className="admin-hall_delete_button" onClick={() => deleteHall(hall.id)}></div>
+                                <div className="HallSet__delete-button" onClick={() => deleteHall(hall.id)}></div>
                             </div>
                         ))}
                     </div>

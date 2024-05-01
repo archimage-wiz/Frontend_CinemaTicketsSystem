@@ -1,7 +1,8 @@
 import "./HallOpenCloseConf.css";
 import { HallChooser } from "../../../components/HallChooser/HallChooser";
 import { BackendAPI } from "../../../BackendAPI/BackendAPI";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { HallType } from "../../../Types/Hall";
 
 export function HallOpenCloseConf() {
 
@@ -15,7 +16,7 @@ export function HallOpenCloseConf() {
             backend.unsubscribeHallsUpdate(updateHalls);
         };
     }, [backend]);
-    function updateHalls(hallsData: []) {
+    function updateHalls(hallsData: HallType[]) {
         setHalls(() => hallsData);
     }
     function chooseHall(hall: number) {
@@ -30,17 +31,17 @@ export function HallOpenCloseConf() {
 
     return (
         <>
-            <div className="admin-hall_container">
-                <header className="admin-hall_title admin-hall_title_linedecorator_upper">
+            <div className="AdminSection__container">
+                <header className="AdminSection__header AdminSection__header-linedecorator_upper">
                     <div>ОТКРЫТЬ ПРОДАЖИ</div>
-                    <div className="admin-hall_title_close"></div>
+                    <div className="AdminSection__header-close-button"></div>
                 </header>
-                <section className="admin-hall_container_body">
+                <section className="AdminSection__body-container">
                     
-                    <div className="hall-openclose__choose-hall-title">Выберите залл для открытия/закрытия продаж:</div>
+                    <div className="HallOpenClose__choose-hall-title">Выберите залл для открытия/закрытия продаж:</div>
                     <HallChooser chooseHallF={chooseHall}/>
-                    <div className="hall-openclose__ready-title">Зал: {getHallStatus()}</div>
-                    <button className="standart-button hall-openclose__apply-button" onClick={openCloseHall}>Открыть продажу билетов</button>
+                    <div className="HallOpenClose__ready-title">Зал: {getHallStatus()}</div>
+                    <button className="standart-button HallOpenClose__apply-button" onClick={openCloseHall}>Открыть продажу билетов</button>
                 </section>
             </div>
         </>

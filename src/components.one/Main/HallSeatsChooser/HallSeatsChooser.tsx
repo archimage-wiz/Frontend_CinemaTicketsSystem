@@ -2,7 +2,10 @@ import "./HallSeatsChooser.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { BackendAPI } from "../../../BackendAPI/BackendAPI";
 import { useEffect, useState } from "react";
-import { Header } from "../Header/Header";
+import { Header } from "../../../components/Header/Header";
+import { HallType } from "../../../Types/Hall";
+import { FilmType } from "../../../Types/Film";
+import { SeanceType } from "../../../Types/Seance";
 
 export function HallSeatsChooser() {
     const navigate = useNavigate();
@@ -27,19 +30,24 @@ export function HallSeatsChooser() {
         backend.subscribeHallsUpdate(updateHalls);
         backend.subscribeFilmsUpdate(updateFilms);
         backend.getHallConfig(parseInt(seanceId!), currentDate!).then((data) => setHallConfig(data.result));
+        return () => {
+            backend.unsubscribeSeancesUpdate(updateSeances);
+            backend.unsubscribeHallsUpdate(updateHalls);
+            backend.unsubscribeFilmsUpdate(updateFilms);
+        }
     }, []);
 
     function seanceById(id: number): { seance_filmid: number; seance_hallid: number; seance_time: string } | undefined {
         return backend.getSeances().find((s: { id: number }) => s.id === id);
     }
 
-    function updateHalls(halls: []) {
+    function updateHalls(halls: HallType[]) {
         setHall(halls.find((h: { id: number }) => h.id === seanceById(Number(seanceId))?.seance_hallid) ?? {});
     }
-    function updateFilms(films: []) {
+    function updateFilms(films: FilmType[]) {
         setFilm(films.find((f: { id: number }) => f.id === seanceById(Number(seanceId))?.seance_filmid) ?? {});
     }
-    function updateSeances(seances: []) {
+    function updateSeances(seances: SeanceType[]) {
         const s = seances.find((s: { id: number }) => s.id === Number(seanceId));
         setSeance(s ?? {});
     }

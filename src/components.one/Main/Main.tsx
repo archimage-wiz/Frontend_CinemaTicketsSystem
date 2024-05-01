@@ -8,12 +8,10 @@ import { PaymentProcResult } from "./PaymentProcResult/PaymentProcResult";
 
 export function Main() {
 
-    // const { pathname } = useLocation();
-
     return (
         <>
-            <div className="main-body_bg">
-                <div className="main-content_container">
+            <div className="MainBody_background">
+                <div className="MainContainer__content">
                     <Routes>
                         <Route path="/hall/:seanceId/:currentDate" element={<HallSeatsChooser />} />
                         <Route path="/payment/:seanceId/:hallId/:filmId/:currentDate" element={<PaymentProc />} />

@@ -1,14 +1,14 @@
 
-.hall-seats__choose-hall-title {
+.HallSeatsConf__choose-hall-title {
     padding: 0px 0px 12px 0px;
 }
-.hall-seats__choose-seats-title {
+.HallSeatsConf__choose-seats-title {
     padding: 36px 0px 12px 0px;
 }
-.hall-seats__choose-seats-type-title {
+.HallSeatsConf__choose-seats-type-title {
     padding: 36px 0px 12px 0px;
 }
-.hall-seats__choose-seats-change-type-title {
+.HallSeatsConf__choose-seats-change-type-title {
     padding: 0px 0px 11px 0px;
     font-family: Roboto;
     font-size: 14px;
@@ -17,7 +17,7 @@
     text-align: left;
     color: rgba(132, 132, 132, 1);
 }
-.hall-seats__seats-info-container {
+.HallSeatsConf__seats-info-container {
     display: flex;
     gap: 10px;
     align-items: center;
@@ -30,16 +30,16 @@
     color: rgba(132, 132, 132, 1);
 }
 
-.admin-hallseats_list_item {
+.HallSeatsConf__list_item {
     border: 1px solid;
 }
 
-.hall-seats__rows-seats {
+.HallSeatsConf__rows-seats {
     display: flex;
     gap: 10px;
     align-items: center;
 }
-.hall-seats__rows-seats label {
+.HallSeatsConf__rows-seats label {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -49,7 +49,7 @@
     line-height: 14px;
     color: rgba(132, 132, 132, 1);
 }
-.hall-seats__rows-seats input {
+.HallSeatsConf__rows-seats input {
     width: 100px;
     height: 36px;
     padding: 8px 8.8px 9px 8.8px;
@@ -58,7 +58,7 @@
     opacity: 0px;
     box-sizing: border-box;
 }
-.hall-seats__rows-seats div {
+.HallSeatsConf__rows-seats div {
     text-transform: uppercase;
     position: relative;
     top: 6px;
@@ -69,7 +69,7 @@
     color: rgba(132, 132, 132, 1);
 }
 
-.admin-hallseats_conf_main_container {
+.HallSeatsConf__conf_main_container {
     width: 100%;
     border: 1px solid;
     /* height: 500px; */
@@ -80,13 +80,14 @@
     padding: 36px 0px;
 }
 
-.admin-hallseats_conf_seats_container {
+.HallSeatsConf__conf_seats_container {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    align-items: center;
 }
 
-.admin-hallseats_conf_seats_container::before {
+.HallSeatsConf__conf_seats_container::before {
     content: "экран";
     padding-bottom: 20px;
     font-family: Roboto;
@@ -94,17 +95,19 @@
     font-weight: 400;
     line-height: 18px;
     letter-spacing: 19px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
     text-transform: uppercase;
+
 }
 
-.admin-hallseats_conf_seats_row {
+.HallSeatsConf__conf_seats_row {
     display: flex;
     flex-direction: row;
     gap: 10px;
 }
 
-.admin-hallseats_conf_aloneseat {
+.HallSeatsConf__conf_aloneseat {
     width: 26px;
     height: 26px;
     border-radius: 4px;
@@ -112,18 +115,18 @@
     cursor: pointer;
 }
 
-.admin-hallseats_conf_aloneseat_standart {
+.HallSeatsConf__conf_aloneseat_standart {
     background: rgba(196, 196, 196, 1);
     border: 1px solid rgba(57, 57, 57, 1)
 }
 
-.admin-hallseats_conf_aloneseat_vip {
+.HallSeatsConf__conf_aloneseat_vip {
     background: rgba(196, 196, 196, 1);
     background: url("img/vip_seat.png");
     border: 1px solid rgba(10, 130, 138, 1)
 }
 
-.admin-hallseats_conf_aloneseat_disabled {
+.HallSeatsConf__conf_aloneseat_disabled {
     background-color: transparent;
     border: 1px solid rgba(196, 196, 196, 1);
 }

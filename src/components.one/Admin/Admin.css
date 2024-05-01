@@ -1,4 +1,33 @@
-.admin-hall_container {
+.AdminMain__background {
+    background-color: rgba(0, 0, 0, 0.5);
+    background-image: url("img/admin_bg.jpg");
+    background-repeat: no-repeat;
+    /* background-size: cover; */
+    background-size: auto 100%;
+    font-family: "Roboto", sans-serif;
+    color: #fff;
+    min-height: 100vh;
+    min-width: 390px;
+    position: relative;
+    z-index: 1;
+    padding: 0px 0px 100px 0px;
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
+}
+
+.AdminMain__container {
+    max-width: 960px;
+    min-width: 390px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.AdminSection__container {
     display: flex;
     flex-direction: column;
     max-width: 960px;
@@ -7,7 +36,7 @@
     padding: 0;
 }
 
-.admin-hall_title {
+.AdminSection__header {
     font-family: "Roboto-Regular", Helvetica;
     display: flex;
     flex-wrap: nowrap;
@@ -23,37 +52,7 @@
     line-height: 25px;
 }
 
-.admin-hall_title_linedecorator::before {
-    content: "";
-    position: absolute;
-    width: 3px;
-    height: 48px;
-    top: 48px;
-    left: 61px;
-    background-color: #bc95d6;
-}
-
-.admin-hall_title_linedecorator_upper::before {
-    content: "";
-    position: absolute;
-    width: 3px;
-    height: 48px;
-    top: 0px;
-    left: 61px;
-    background-color: #bc95d6;
-}
-
-.admin-hall_title_linedecorator_both::before {
-    content: "";
-    position: absolute;
-    width: 3px;
-    height: 100%;
-    top: 0px;
-    left: 61px;
-    background-color: #bc95d6;
-}
-
-.admin-hall_title::after {
+.AdminSection__header::after {
     content: "";
     position: absolute;
     width: 44px;
@@ -67,7 +66,37 @@
     box-sizing: border-box;
 }
 
-.admin-hall_title_close {
+.AdminSection__header-linedecorator::before {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 48px;
+    top: 48px;
+    left: 61px;
+    background-color: #bc95d6;
+}
+
+.AdminSection__header-linedecorator_upper::before {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 48px;
+    top: 0px;
+    left: 61px;
+    background-color: #bc95d6;
+}
+
+.AdminSection__header-linedecorator_both::before {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 100%;
+    top: 0px;
+    left: 61px;
+    background-color: #bc95d6;
+}
+
+.AdminSection__header-close-button {
     position: absolute;
     width: 24px;
     height: 16px;
@@ -77,7 +106,7 @@
     cursor: pointer;
 }
 
-.admin-hall_container_body {
+.AdminSection__body-container {
     font-family: "Roboto", sans-serif;
     font-size: 16px;
     font-weight: 500;
@@ -91,11 +120,11 @@
     position: relative;
 }
 
-.admin-hall_container_body_hidden {
+.AdminSection__body-container_hidden {
     display: none;
 }
 
-.admin-hall_container_body_linedecorator:before {
+.AdminSection__body-container_linedecorator:before {
     content: "";
     position: absolute;
     width: 3px;
@@ -105,8 +134,7 @@
     background-color: #bc95d6;
 }
 
-
-.admin-hall_container_body button:hover {
+.AdminSection__body-container button:hover {
     box-shadow: 0px 3px 3px #0000003d;
 }
 

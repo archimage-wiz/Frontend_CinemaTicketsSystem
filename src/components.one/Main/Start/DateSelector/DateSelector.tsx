@@ -29,16 +29,16 @@ export function DateSelector(props: { dateSelectCallBack: (d: Date) => void }) {
 
     return (
         <>
-            <nav className="start-page__date-nav-container">
+            <nav className="DateSelector__date-nav-container">
                 {[0, 1, 2, 3, 4, 5].map((item) => (
                     <div
                         className={
-                            "start-page__date-nav-element-container " +
+                            "DateSelector__date-nav-element-container " +
                             (selectedDate.getDate() === getDayOfWeek(item).date.getDate()
-                                ? "start-page__date-nav-element-container_selected "
+                                ? "DateSelector__date-nav-element-container_selected "
                                 : "") +
                             (getDayOfWeek(item).day === "Сб" || getDayOfWeek(item).day === "Вс"
-                                ? "start-page__date-nav-element-container_red "
+                                ? "DateSelector__date-nav-element-container_red "
                                 : "")
                         }
                         key={item}
@@ -47,8 +47,8 @@ export function DateSelector(props: { dateSelectCallBack: (d: Date) => void }) {
                         <div
                             className={
                                 selectedDate.getDate() === getDayOfWeek(item).date.getDate()
-                                    ? "start-page__date-nav-element-text_selected"
-                                    : "start-page__date-nav-element-text "
+                                    ? "DateSelector__date-nav-element-text_selected"
+                                    : "DateSelector__date-nav-element-text "
                             }
                         >
                             {getDayOfWeek(item).date.getDate() === new Date().getDate() ? (
@@ -60,8 +60,8 @@ export function DateSelector(props: { dateSelectCallBack: (d: Date) => void }) {
                         <div
                             className={
                                 selectedDate.getDate() === getDayOfWeek(item).date.getDate()
-                                    ? "start-page__date-nav-element-text_selected "
-                                    : "start-page__date-nav-element-text "
+                                    ? "DateSelector__date-nav-element-text_selected "
+                                    : "DateSelector__date-nav-element-text "
                             }
                         >
                             {getDayOfWeek(item).date.getDate() === new Date().getDate() ? (
@@ -75,9 +75,9 @@ export function DateSelector(props: { dateSelectCallBack: (d: Date) => void }) {
                     </div>
                 ))}
                 {showNextDateButton ? (
-                    <div className="start-page__date-nav-element-container">
+                    <div className="DateSelector__date-nav-element-container">
                         <div
-                            className="start-page__date-nav-element-text-scroll-arrow"
+                            className="DateSelector__date-nav-element-text-scroll-arrow"
                             onClick={increaseDate}
                         >
                             {">"}

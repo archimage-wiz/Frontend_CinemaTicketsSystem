@@ -1,9 +1,10 @@
 import "./PaymentProcResult.css";
 import { useEffect, useState } from "react";
-import { BackendAPI, chosenSeats } from "../../../BackendAPI/BackendAPI";
-import { Header } from "../Header/Header";
+import { BackendAPI } from "../../../BackendAPI/BackendAPI";
+import { Header } from "../../../components/Header/Header";
 import { useNavigate, useParams } from "react-router-dom";
 import {QRCodeSVG} from 'qrcode.react';
+import { chosenSeats } from "../../../Types/ChosenSeats";
 
 export function PaymentProcResult() {
     const navigate = useNavigate();
@@ -24,7 +25,6 @@ export function PaymentProcResult() {
     }
 
     useEffect(() => {
-        console.log("useEffect");
         const film = filmById(Number(filmId));
         const hall = backend.getHalls().find((h: { id: number }) => h.id === Number(hallId));
         const seance = backend.getSeances().find((s: { id: number }) => s.id === Number(seanceId));

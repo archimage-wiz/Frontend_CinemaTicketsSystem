@@ -1,4 +1,4 @@
-.hall-openclose__choose-hall-title {
+.HallOpenClose__choose-hall-title {
     font-family: Roboto;
     font-size: 16px;
     font-weight: 400;
@@ -8,7 +8,7 @@
     color: black;
 }
 
-.hall-openclose__ready-title {
+.HallOpenClose__ready-title {
     font-family: Roboto;
     font-size: 16px;
     font-weight: 400;
@@ -22,7 +22,7 @@
     justify-content: center;
 }
 
-.hall-openclose__apply-button {
+.HallOpenClose__apply-button {
     align-self: center;
     
 }

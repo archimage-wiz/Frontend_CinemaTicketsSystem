@@ -2,6 +2,7 @@ import "./HallPriceConf.css";
 import { useEffect, useRef, useState } from "react";
 import { HallChooser } from "../../../components/HallChooser/HallChooser";
 import { BackendAPI } from "../../../BackendAPI/BackendAPI";
+import { HallType } from "../../../Types/Hall";
 
 export function HallPriceConf() {
     const backend = BackendAPI.getInstance();
@@ -18,7 +19,7 @@ export function HallPriceConf() {
             backend.unsubscribeHallsUpdate(updateHalls);
         };
     }, [backend]);
-    function updateHalls(hallsData: []) {
+    function updateHalls(hallsData: HallType[]) {
         setHalls(() => hallsData);
         setStandartSeatPrice(() => {
             return Number(hallsData[chosenHall.current]?.["hall_price_standart"]);
@@ -68,30 +69,30 @@ export function HallPriceConf() {
 
     return (
         <>
-            <div className="admin-hall_container">
-                <header className="admin-hall_title admin-hall_title_linedecorator_both">
+            <div className="AdminSection__container">
+                <header className="AdminSection__header AdminSection__header-linedecorator_both">
                     <div>КОНФИГУРАЦИЯ ЦЕН</div>
-                    <div className="admin-hall_title_close"></div>
+                    <div className="AdminSection__header-close-button"></div>
                 </header>
-                <section className="admin-hall_container_body admin-hall_container_body_linedecorator">
-                    <div className="hall-price__choose-hall-title">Выберите зал для концигурации:</div>
+                <section className="AdminSection__body-container AdminSection__body-container_linedecorator">
+                    <div className="HallPriceConf__choose-hall-title">Выберите зал для концигурации:</div>
                     <HallChooser chooseHallF={chooseHall} />
-                    <div className="hall-price__price-set-title">Установите цены для типов кресел:</div>
-                    <label className="hall-price__set-price-label-container">
+                    <div className="HallPriceConf__price-set-title">Установите цены для типов кресел:</div>
+                    <label className="HallPriceConf__set-price-label-container">
                         Цена, рублей
-                        <div className="hall-price__set-price_container">
+                        <div className="HallPriceConf__set-price_container">
                             <input type="number" value={standartSeatPrice || 0} onChange={standartSeatPriceHandler} />
                             <div>за</div>
-                            <div className="admin-hallseats_conf_aloneseat admin-hallseats_conf_aloneseat_standart"></div>
+                            <div className="HallSeatsConf__conf_aloneseat HallSeatsConf__conf_aloneseat_standart"></div>
                             <div>обычные кресла</div>
                         </div>
                     </label>
-                    <label className="hall-price__set-price-label-container">
+                    <label className="HallPriceConf__set-price-label-container">
                         Цена, рублей
-                        <div className="hall-price__set-price_container">
+                        <div className="HallPriceConf__set-price_container">
                             <input type="number" value={vipSeatPrice || 0} onChange={vipSeatPriceHandler} />
                             <div>за</div>
-                            <div className="admin-hallseats_conf_aloneseat admin-hallseats_conf_aloneseat_vip"></div>
+                            <div className="HallSeatsConf__conf_aloneseat HallSeatsConf__conf_aloneseat_vip"></div>
                             <div> VIP кресла</div>
                         </div>
                     </label>

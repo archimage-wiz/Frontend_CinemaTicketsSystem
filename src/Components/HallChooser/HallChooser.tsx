@@ -21,12 +21,12 @@ export function HallChooser(props: { chooseHallF: (n: number) => void }) {
 
     return (
         <>
-            <div className="hall-chooser__hall-list">
+            <div className="HallChooser__hall-list">
                 {halls.map((hall: { hall_name: string }, index) => (
                     <div
                         key={crypto.randomUUID()}
-                        className={`hall-chooser__hall-item ${
-                            chosenHall === index ? "hall-chooser__hall-item_selected" : ""
+                        className={`HallChooser__hall-item ${
+                            chosenHall === index ? "HallChooser__hall-item_selected" : ""
                         }`}
                         onClick={() => chooseHall(index)}
                     >

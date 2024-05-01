@@ -1,4 +1,4 @@
-.admin-popup_container {
+.Popup__container {
     font-family: "Roboto", Helvetica;
     display: flex;
     flex-direction: column;
@@ -11,7 +11,7 @@
     background: rgba(234, 233, 235, 0.99);
 }
 
-.admin-popup_float_container {
+.Popup__float-container {
     margin: 0 auto;
     padding: 0;
     position: fixed;
@@ -22,7 +22,7 @@
     box-shadow: 0px 0px 0px 9999px rgba(0, 0, 0, 0.5);
 }
 
-.admin-popup_title {
+.Popup__title {
     display: flex;
     flex-wrap: nowrap;
     font-family: "Roboto", Helvetica;
@@ -40,10 +40,10 @@
     letter-spacing: 0;
     white-space: nowrap;
     position: relative;
+    text-transform: uppercase;
 }
 
-.admin-popup_close {
-    /* position: relative; */
+.Popup__close-button {
     width: 22px;
     height: 22px;
     background-image: url(img/close.png);
@@ -95,7 +95,7 @@
     box-sizing: border-box;
 }
 
-.FilmAddPopup__textarea {
+.Popup__textarea {
     height: 80px;
     resize: none;
     box-sizing: border-box;

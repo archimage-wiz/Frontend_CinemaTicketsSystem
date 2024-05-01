@@ -1,11 +1,11 @@
-.hall-price__choose-hall-title {
+.HallPriceConf__choose-hall-title {
     padding-bottom: 12px;
 }
-.hall-price__price-set-title {
+.HallPriceConf__price-set-title {
     padding: 36px 0px 12px 5px;
     align-self: flex-start;
 }
-.hall-price__set-price_container {
+.HallPriceConf__set-price_container {
     display: flex;
     gap: 8px;
     font-family: Roboto;
@@ -16,7 +16,7 @@
     color: rgba(132, 132, 132, 1);
     align-items: center;
 }
-.hall-price__set-price-label-container {
+.HallPriceConf__set-price-label-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -29,7 +29,7 @@
     color: rgba(132, 132, 132, 1);
     padding-bottom: 12px;
 }
-.hall-price__set-price_container input {
+.HallPriceConf__set-price_container input {
     width: 100px;
     height: 36px;
     padding: 8px 8.8px 9px 8.8px;

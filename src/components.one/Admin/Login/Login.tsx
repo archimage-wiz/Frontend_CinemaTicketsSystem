@@ -22,30 +22,40 @@ export function Login(props: LoginProps) {
 
     return (
         <>
-            <section className="admin-popup_container admin-login_container_size">
-                <div className="admin-popup_title admin-popup_title_pos">
+            <section className="Popup__container AdminLogin__container_size">
+                <div className="Popup__title AdminLogin__title_position">
                     <div>АВТОРИЗАЦИЯ</div>
-                    <div className="admin-popup_close"></div>
                 </div>
 
-                <form onSubmit={Login} ref={loginForm} className="admin-popup_form_container">
-                    <label>
+                <form onSubmit={Login} ref={loginForm} className="PopupForm__container">
+                    <label className="PopupForm__label">
                         E-mail
-                        <input id="email" name="login" type="email" placeholder="Email" autoComplete="email" required />
+                        <input
+                            className="PopupForm__input"
+                            id="email"
+                            name="login"
+                            type="email"
+                            placeholder="Email"
+                            autoComplete="email"
+                            required
+                        />
                     </label>
-                    <label>
+                    <label className="PopupForm__label">
                         Пароль
                         <input
+                            className="PopupForm__input"
                             type="password"
                             name="password"
                             placeholder="Пароль"
                             autoComplete="current-password"
                             required
                         />
-                    </label><div className="admin-popup_buttons_container">
-                    <button id="login_btn" type="submit">
-                        АВТОРИЗОВАТЬСЯ
-                    </button></div>
+                    </label>
+                    <div className="Popup_buttons-container">
+                        <button id="login_btn" type="submit" className="standart-button">
+                            АВТОРИЗОВАТЬСЯ
+                        </button>
+                    </div>
                 </form>
             </section>
         </>

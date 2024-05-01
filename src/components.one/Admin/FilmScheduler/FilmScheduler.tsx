@@ -4,6 +4,9 @@ import { BackendAPI } from "../../../BackendAPI/BackendAPI";
 import { minutesSpellingTransform } from "../../../components/CommonFunctions/CommonFunctions";
 import { FilmAddPopup } from "./FilmAddPopup/FilmAddPopup";
 import { SeanceAddPopup } from "./SeanceAddPopup/SeanceAddPopup";
+import { HallType } from "../../../Types/Hall";
+import { FilmType } from "../../../Types/Film";
+import { SeanceType } from "../../../Types/Seance";
 
 export function FilmScheduler() {
     const backend = BackendAPI.getInstance();
@@ -26,18 +29,18 @@ export function FilmScheduler() {
             backend.unsubscribeSeancesUpdate(updateSeances);
         };
     }, [backend]);
-    function updateHalls(hallsData: []) {
+    function updateHalls(hallsData: HallType[]) {
         setHalls(() => hallsData);
     }
-    function updateFilms(filmsData: []) {
+    function updateFilms(filmsData: FilmType[]) {
         setFilms(() => filmsData);
     }
-    function updateSeances(seancesData: []) {
+    function updateSeances(seancesData: SeanceType[]) {
         setSeances(() => seancesData);
     }
 
-    function filmById(id: number): { film_name: string; color: string } | undefined {
-        return films.find((film: { id: number }) => film.id === id);
+    function filmById(id: number): FilmType | undefined {
+        return films.find((film: FilmType) => film.id === id);
     }
     function toggleAddPopup() {
         setShowAdd(!showAdd);
@@ -84,22 +87,16 @@ export function FilmScheduler() {
 
     return (
         <>
-            <div className="admin-hall_container">
-                <header className="admin-hall_title admin-hall_title_linedecorator_both">
+            <div className="AdminSection__container">
+                <header className="AdminSection__header AdminSection__header-linedecorator_both">
                     <div>СЕТКА СЕАНСОВ</div>
-                    <div className="admin-hall_title_close"></div>
+                    <div className="AdminSection__header-close-button"></div>
                 </header>
-                <section className="admin-hall_container_body admin-hall_container_body_linedecorator">
+                <section className="AdminSection__body-container AdminSection__body-container_linedecorator">
                     <input type="submit" value="Добавить фильм" className="standart-button" onClick={toggleAddPopup} />
                     <div className="film-seances__film-chooser_container">
                         {films.map(
-                            (film: {
-                                id: number;
-                                film_name: string;
-                                color: string;
-                                film_poster: string;
-                                film_duration: string;
-                            }) => (
+                            (film: FilmType) => (
                                 <div
                                     key={crypto.randomUUID()}
                                     className="film-seances__film-chooser-item"
@@ -120,7 +117,7 @@ export function FilmScheduler() {
                     </div>
 
                     <div className="film-seances__seance-scheduler_container">
-                        {halls.map((hall: { id: number; hall_name: string }) => (
+                        {halls.map((hall: HallType) => (
                             <div key={crypto.randomUUID()} className="FilmScheduler__hall-seances-container">
                                 <div
                                     className={getTrashBinClasses()}
@@ -169,7 +166,6 @@ export function FilmScheduler() {
                             </div>
                         ))}
                     </div>
-
                     <div className="FilmScheduler__buttons-container">
                         <input type="button" value="Отмена" className="cancel-button" />
                         <input type="submit" value="Сохранить" className="standart-button" />

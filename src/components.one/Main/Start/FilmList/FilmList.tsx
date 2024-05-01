@@ -3,13 +3,16 @@ import { useEffect, useState } from "react";
 import { BackendAPI } from "../../../../BackendAPI/BackendAPI";
 import { minutesSpellingTransform } from "../../../../components/CommonFunctions/CommonFunctions";
 import { Link } from "react-router-dom";
+import { HallType } from "../../../../Types/Hall";
+import { FilmType } from "../../../../Types/Film";
+import { SeanceType } from "../../../../Types/Seance";
 
 export function FilmList(props: { date: Date }) {
     const displayDate = props.date;
     const [backend] = useState(BackendAPI.getInstance());
-    const [halls, setHalls] = useState([]);
-    const [films, setFilms] = useState([]);
-    const [seances, setSeances] = useState([]);
+    const [halls, setHalls] = useState<HallType[]>([]);
+    const [films, setFilms] = useState<FilmType[]>([]);
+    const [seances, setSeances] = useState<SeanceType[]>([]);
 
     useEffect(() => {
         backend.subscribeHallsUpdate(updateHalls);
@@ -17,32 +20,37 @@ export function FilmList(props: { date: Date }) {
         backend.subscribeSeancesUpdate(updateSeances);
     }, []);
 
-    function updateHalls(halls: []) {
+    function updateHalls(halls: HallType[]) {
         setHalls(halls);
     }
-    function updateFilms(films: []) {
+    function updateFilms(films: FilmType[]) {
         setFilms(films);
     }
-    function updateSeances(seances: []) {
+    function updateSeances(seances: SeanceType[]) {
         setSeances(seances);
     }
 
-    function filmById(id: number): { film_name: string } | undefined {
+    function filmById(id: number): FilmType | undefined {
         return films?.find((film: { id: number }) => film.id === id);
     }
-    function hallById(id: number): { hall_name: string; hall_open: number } | undefined {
+    function hallById(id: number): HallType | undefined {
         return halls.find((h: { id: number }) => h.id === id);
     }
 
+    type FilmIdSeanceTimeSubType = { id: number; time: string };
     type FilmDataType = {
-        [key: string]: any;
+        [key: number]: FilmType & {
+            halls: {
+                [key: number]: FilmIdSeanceTimeSubType[];
+            };
+        };
     };
 
     function FilmsData(): FilmDataType {
         const filmData: FilmDataType = {};
-        seances?.forEach((seance: { id: number; seance_hallid: number; seance_filmid: number; seance_time: string }) => {
-            const film = filmById(seance.seance_filmid);
-            const hall = hallById(seance.seance_hallid);
+        seances?.forEach((seance: SeanceType) => {
+            const film: FilmType = filmById(seance.seance_filmid)!;
+            const hall: HallType = hallById(seance.seance_hallid)!;
             if (!filmData[seance.seance_filmid]) {
                 filmData[seance.seance_filmid] = {
                     ...film,
@@ -57,12 +65,11 @@ export function FilmList(props: { date: Date }) {
                     id: seance.id,
                     time: seance.seance_time,
                 });
-                filmData[seance.seance_filmid].halls[seance.seance_hallid]?.sort((a: string, b: string) =>
-                    ("" + a).localeCompare(b)
+                filmData[seance.seance_filmid].halls[seance.seance_hallid]?.sort(
+                    (a: FilmIdSeanceTimeSubType, b: FilmIdSeanceTimeSubType) => ("" + a.time).localeCompare(b.time)
                 );
             }
         });
-        console.log(filmData);
         return filmData;
     }
 
@@ -75,29 +82,27 @@ export function FilmList(props: { date: Date }) {
 
     return (
         <>
-            {Object.entries<FilmDataType>(FilmsData()).map(([, film]) => (
-                <section key={crypto.randomUUID()} className="start-film-list__container">
-                    <div className="start-film-list__container-poster-info">
-                        <img src={film.film_poster} className="start-film-list__poster"></img>
-                        <div className="start-film-list__container-info-descr">
-                            <div className="start-film-list__film-title">{film.film_name}</div>
-                            <div className="start-film-list__film-info">{film.film_description}</div>
-                            <div className="start-film-list__film-duration-country">
+            {Object.entries(FilmsData()).map(([, film]) => (
+                <section key={crypto.randomUUID()} className="FilmList__container">
+                    <div className="FilmList__container-poster-info">
+                        <img src={film.film_poster} className="FilmList__poster"></img>
+                        <div className="FilmList__container-info-descr">
+                            <div className="FilmList__film-title">{film.film_name}</div>
+                            <div className="FilmList__film-info">{film.film_description}</div>
+                            <div className="FilmList__film-duration-country">
                                 {film.film_duration} {minutesSpellingTransform(film.film_duration)} {film.film_origin}
                             </div>
                         </div>
                     </div>
                     {Object.entries(film.halls as { [key: number]: [] }).map(([hallId, seances]) => (
-                        <div key={crypto.randomUUID()} className="start-film-list__film-seances-container">
-                            <div className="start-film-list__hall-list-hall-name">
-                                {hallById(Number(hallId))?.hall_name}
-                            </div>
-                            <div key={crypto.randomUUID()} className="start-film-list__film-seances-time">
-                                {seances.map((seance: {id: number; time: string}) =>
+                        <div key={crypto.randomUUID()} className="FilmList__film-seances-container">
+                            <div className="FilmList__hall-list-hall-name">{hallById(Number(hallId))?.hall_name}</div>
+                            <div key={crypto.randomUUID()} className="FilmList__film-seances-time">
+                                {seances.map((seance: { id: number; time: string }) =>
                                     pastSeance(seance.time) ? (
                                         <div
                                             key={crypto.randomUUID()}
-                                            className="start-film-list__film-seances-time-item_past start-film-list__film-seances-time-item"
+                                            className="FilmList__film-seances-time-item_past FilmList__film-seances-time-item"
                                         >
                                             {seance.time}
                                         </div>
@@ -105,7 +110,7 @@ export function FilmList(props: { date: Date }) {
                                         <Link
                                             key={crypto.randomUUID()}
                                             to={`/hall/${seance.id}/${displayDate.toISOString().split("T")[0]}`}
-                                            className="start-film-list__film-seances-time-item start-film-list__film-seances-time-item_avail "
+                                            className="FilmList__film-seances-time-item FilmList__film-seances-time-item_avail "
                                         >
                                             {seance.time}
                                         </Link>

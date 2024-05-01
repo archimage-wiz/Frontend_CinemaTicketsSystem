@@ -1,8 +1,12 @@
 import "./PaymentProc.css";
 import { useEffect, useState } from "react";
-import { BackendAPI, chosenSeats } from "../../../BackendAPI/BackendAPI";
-import { Header } from "../Header/Header";
+import { BackendAPI } from "../../../BackendAPI/BackendAPI";
+import { Header } from "../../../components/Header/Header";
 import { useNavigate, useParams } from "react-router-dom";
+import { SeanceType } from "../../../Types/Seance";
+import { HallType } from "../../../Types/Hall";
+import { FilmType } from "../../../Types/Film";
+import { chosenSeats } from "../../../Types/ChosenSeats";
 
 export function PaymentProc() {
     const navigate = useNavigate();
@@ -28,13 +32,13 @@ export function PaymentProc() {
         backend.subscribeSeancesUpdate(updateSeances);
     }, []);
 
-    function updateSeances(seances: []) {
+    function updateSeances(seances: SeanceType[]) {
         setSeance(seances.find((s: { id: number }) => s.id === Number(seanceId)) ?? {});
     }
-    function updateHalls(halls: []) {
+    function updateHalls(halls: HallType[]) {
         setHall(halls.find((h: { id: number }) => h.id === Number(hallId)) ?? {});
     }
-    function updateFilms(films: []) {
+    function updateFilms(films: FilmType[]) {
         setFilm(films.find((f: { id: number }) => f.id === Number(filmId)) ?? {});
     }
 

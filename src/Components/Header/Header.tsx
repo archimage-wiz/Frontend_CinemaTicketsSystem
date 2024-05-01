@@ -1,4 +1,4 @@
-import "../../../css/Buttons.css";
+import "../../css/Buttons.css";
 import "./Header.css";
 
 type HeaderProps = {
@@ -13,7 +13,7 @@ export function Header(props: HeaderProps) {
 
     return (
         <>
-            <header className="header-container">
+            <header className="MainHeader__container">
                 <span className="header-title">
                     ИДЁМ<span className="header-title__letter">В</span>КИНО
                 </span>

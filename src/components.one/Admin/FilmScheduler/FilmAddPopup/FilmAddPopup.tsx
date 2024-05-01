@@ -1,3 +1,4 @@
+import "../../../../css/PopUp.css";
 import "./FilmAddPopup.css";
 import { useRef, useState } from "react";
 import { BackendAPI } from "../../../../BackendAPI/BackendAPI.tsx";
@@ -9,7 +10,7 @@ type FilmAddPopupProps = {
 export function FilmAddPopup(props: FilmAddPopupProps) {
     const backend = BackendAPI.getInstance();
     const { closeFunc } = props;
-    const file = useRef<HTMLInputElement>();
+    const file = useRef<HTMLInputElement>(null);
     const [fileName, setFileName] = useState("");
 
 
@@ -34,10 +35,10 @@ export function FilmAddPopup(props: FilmAddPopupProps) {
 
     return (
         <>
-            <div className="admin-popup_container admin-popup_float_container">
-                <header className="admin-popup_title">
+            <div className="Popup__container Popup__float-container">
+                <header className="Popup__title">
                     <div>ДОБАВЛЕНИЕ ФИЛЬМА</div>
-                    <div className="admin-popup_close" onClick={closeFunc}></div>
+                    <div className="Popup__close-button" onClick={closeFunc}></div>
                 </header>
                 <form className="PopupForm__container" onSubmit={addFilm}>
                     <label className="PopupForm__label">
@@ -67,7 +68,7 @@ export function FilmAddPopup(props: FilmAddPopupProps) {
                         <textarea
                             placeholder="Описание фильма"
                             name="filmDescription"
-                            className="FilmAddPopup__textarea"
+                            className="Popup__textarea"
                             required
                         ></textarea>
                     </label>

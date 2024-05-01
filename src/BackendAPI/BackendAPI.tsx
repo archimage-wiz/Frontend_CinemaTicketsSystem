@@ -1,23 +1,22 @@
+import { chosenSeats } from "../Types/ChosenSeats";
+import { FilmType } from "../Types/Film";
+import { HallConfigType, HallType } from "../Types/Hall";
+import { SeanceType } from "../Types/Seance";
+
 const backendDomainUrl = "https://shfe-diplom.neto-server.ru";
 const filmColorsArr = ["#caff85", "#85ff89", "#85ffd3", "#85e2ff", "#8599ff"];
 
-export type chosenSeats = {
-    place: number;
-    row: number;
-    seanceId: number;
-    cost: number;
-};
 
 export class BackendAPI {
     private static instance: BackendAPI;
     private domain: string;
     public isAuth: boolean = false;
-    private halls: [] = [];
-    private films: [] = [];
-    private seances: [] = [];
-    private onUpdateHalls: ((halls: []) => void)[] = [];
-    private onUpdateFilms: ((films: []) => void)[] = [];
-    private onUpdateSeances: ((seances: []) => void)[] = [];
+    private halls: HallType[] = [];
+    private films: FilmType[] = [];
+    private seances: SeanceType[] = [];
+    private onUpdateHalls: ((halls: HallType[]) => void)[] = [];
+    private onUpdateFilms: ((films: FilmType[]) => void)[] = [];
+    private onUpdateSeances: ((seances: SeanceType[]) => void)[] = [];
     private chosenSeats: chosenSeats[] = [];
     private constructor() {
         this.domain = backendDomainUrl;
@@ -40,35 +39,35 @@ export class BackendAPI {
     public getSeats(): chosenSeats[] {
         return this.chosenSeats;
     }
-    public getHalls(): [] {
+    public getHalls(): HallType[] {
         return this.halls;
     }
-    public getFilms(): [] {
+    public getFilms(): FilmType[] {
         return this.films;
     }
-    public getSeances(): [] {
+    public getSeances(): SeanceType[] {
         return this.seances;
     }
 
-    public subscribeHallsUpdate(f: (halls: []) => void) {
+    public subscribeHallsUpdate(f: (halls: HallType[]) => void) {
         if (!this.onUpdateHalls.includes(f)) {
             this.onUpdateHalls.push(f);
         }
         f(this.halls);
     }
-    public unsubscribeHallsUpdate(f: (halls: []) => void) {
+    public unsubscribeHallsUpdate(f: (halls: HallType[]) => void) {
         this.onUpdateHalls = this.onUpdateHalls.filter((item) => item !== f);
     }
-    public subscribeFilmsUpdate(f: (films: []) => void) {
+    public subscribeFilmsUpdate(f: (films: FilmType[]) => void) {
         if (!this.onUpdateFilms.includes(f)) {
             this.onUpdateFilms.push(f);
         }
         f(this.films);
     }
-    public unsubscribeFilmsUpdate(f: (films: []) => void) {
+    public unsubscribeFilmsUpdate(f: (films: FilmType[]) => void) {
         this.onUpdateFilms = this.onUpdateFilms.filter((item) => item !== f);
     }
-    public subscribeSeancesUpdate(f: (seances: []) => void) {
+    public subscribeSeancesUpdate(f: (seances: SeanceType[]) => void) {
         if (!this.onUpdateSeances.includes(f)) {
             this.onUpdateSeances.push(f);
         }
@@ -99,7 +98,7 @@ export class BackendAPI {
         }
         this.halls = jsonData.result.halls;
         this.films = jsonData.result.films;
-        this.films.map((film: { color: string }) => {
+        this.films.map((film: FilmType) => {
             film["color"] = filmColorsArr[Math.floor(Math.random() * filmColorsArr.length)];
         });
         this.seances = jsonData.result.seances;
@@ -214,7 +213,7 @@ export class BackendAPI {
         hallId: number,
         rowCount: number,
         placeCount: number,
-        hallConfig: any[]
+        hallConfig: HallConfigType[]
     ): Promise<void> {
         const params = new FormData();
         params.set("rowCount", String(rowCount));
@@ -244,7 +243,7 @@ export class BackendAPI {
         }
         const jsonData = await res.json();
         if (jsonData.success === true) {
-            return await new Promise((resolve, reject) => {
+            return await new Promise((resolve) => {
                 this.halls = this.halls.map((hall) => (hall.id === hallId ? jsonData.result : hall));
                 resolve(jsonData.result);
             });

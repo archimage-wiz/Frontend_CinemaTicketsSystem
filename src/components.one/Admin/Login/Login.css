@@ -1,12 +1,12 @@
 
 
 
-.admin-login_container_size {
+.AdminLogin__container_size {
     max-width: 480px;
     min-width: 390px;
 }
 
-.admin-popup_title_pos {
+.AdminLogin__title_position {
     justify-content: center;
 }
 

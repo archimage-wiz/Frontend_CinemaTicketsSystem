@@ -1,5 +1,5 @@
 import "./Start.css";
-import { Header } from "../Header/Header";
+import { Header } from "../../../components/Header/Header";
 import { DateSelector } from "./DateSelector/DateSelector";
 import { useState } from "react";
 import { FilmList } from "./FilmList/FilmList";

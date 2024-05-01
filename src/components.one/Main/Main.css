@@ -1,4 +1,4 @@
-.main-body_bg {
+.MainBody_background {
     background-image: url("/img/index_bg.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -10,7 +10,7 @@
     min-height: 100vh;
 }
 
-.main-content_container {
+.MainContainer__content {
     max-width: 960px;
     min-width: 390px;
     margin: 0 auto;

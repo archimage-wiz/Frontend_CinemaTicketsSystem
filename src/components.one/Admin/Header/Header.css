@@ -1,4 +1,4 @@
-.admin-header {
+.AdminHeader__container {
     display: flex;
     max-height: 120px;
     min-height: 79px;
@@ -10,13 +10,13 @@
 }
 
 @media (max-width: 768px) {
-    .admin-header {
+    .AdminHeader__container {
         height: 79px;
         padding: 15px 0px 0px 25px;
     }
 }
 
-.header-title__subtext {
+.AdminHeader__subtext {
     text-align: left;
     font-family: "Roboto-Regular", Helvetica;
     font-size: 10px;
