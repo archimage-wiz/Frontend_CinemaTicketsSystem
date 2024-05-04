@@ -60,7 +60,7 @@ export function HallSeatsConf() {
     }
     function changeSeatState(row: number, col: number) {
         if (!chosenHallConfig[row][col]) return;
-        const newChosenHallConfig : HallConfigType[] = [...chosenHallConfig];
+        const newChosenHallConfig: HallConfigType[] = [...chosenHallConfig];
         switch (newChosenHallConfig[row][col]) {
             case "disabled":
                 newChosenHallConfig[row][col] = "standart";
@@ -164,12 +164,18 @@ export function HallSeatsConf() {
                         Теперь вы можете указать типы кресел на схеме зала:
                     </div>
                     <div className="HallSeatsConf__seats-info-container">
-                        <div className="HallSeatsConf__conf_aloneseat HallSeatsConf__conf_aloneseat_standart"></div>
-                        <div>— обычные кресла </div>
-                        <div className="HallSeatsConf__conf_aloneseat HallSeatsConf__conf_aloneseat_vip"></div>
-                        <div> — VIP кресла </div>
-                        <div className="HallSeatsConf__conf_aloneseat HallSeatsConf__conf_aloneseat_disabled"></div>
-                        <div> — заблокированные (нет кресла)</div>
+                        <div className="HallSeatsConf__seats-info-row">
+                            <div className="HallSeatsConf__conf_aloneseat HallSeatsConf__conf_aloneseat_standart"></div>
+                            <div>— обычные кресла </div>
+                        </div>
+                        <div className="HallSeatsConf__seats-info-row">
+                            <div className="HallSeatsConf__conf_aloneseat HallSeatsConf__conf_aloneseat_vip"></div>
+                            <div> — VIP кресла </div>
+                        </div>
+                        <div className="HallSeatsConf__seats-info-row">
+                            <div className="HallSeatsConf__conf_aloneseat HallSeatsConf__conf_aloneseat_disabled"></div>
+                            <div> — заблокированные (нет кресла)</div>
+                        </div>
                     </div>
                     <div className="HallSeatsConf__choose-seats-change-type-title">
                         Чтобы изменить вид кресла, нажмите по нему левой кнопкой мыши

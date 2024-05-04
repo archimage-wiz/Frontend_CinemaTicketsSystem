@@ -51,49 +51,73 @@
     font-weight: 700;
     line-height: 25px;
 }
-
-.AdminSection__header::after {
-    content: "";
-    position: absolute;
-    width: 44px;
-    height: 44px;
-    /* top: 26px; */
-    left: 40px;
-    background-color: #ffffff;
-    border-radius: 50px;
-    border: 4px solid;
-    border-color: #bc95d6;
-    box-sizing: border-box;
+@media (max-width: 768px) {
+    .AdminSection__header {
+        padding-left: 67px;
+    }
 }
 
-.AdminSection__header-linedecorator::before {
-    content: "";
-    position: absolute;
-    width: 3px;
-    height: 48px;
-    top: 48px;
-    left: 61px;
-    background-color: #bc95d6;
+@media (min-width: 768px) {
+    .AdminSection__header::after {
+        content: "";
+        position: absolute;
+        width: 44px;
+        height: 44px;
+        /* top: 26px; */
+        left: 40px;
+        background-color: #ffffff;
+        border-radius: 50px;
+        border: 4px solid;
+        border-color: #bc95d6;
+        box-sizing: border-box;
+    }
+}
+@media (max-width: 768px) {
+    .AdminSection__header::after {
+        content: "";
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        /* top: 26px; */
+        left: 31px;
+        background-color: #ffffff;
+        border-radius: 50px;
+        border: 4px solid;
+        border-color: #bc95d6;
+        box-sizing: border-box;
+    }
 }
 
-.AdminSection__header-linedecorator_upper::before {
-    content: "";
-    position: absolute;
-    width: 3px;
-    height: 48px;
-    top: 0px;
-    left: 61px;
-    background-color: #bc95d6;
-}
+@media (min-width: 768px) {
+    .AdminSection__header-linedecorator::before {
+        content: "";
+        position: absolute;
+        width: 3px;
+        height: 48px;
+        top: 48px;
+        left: 61px;
+        background-color: #bc95d6;
+    }
 
-.AdminSection__header-linedecorator_both::before {
-    content: "";
-    position: absolute;
-    width: 3px;
-    height: 100%;
-    top: 0px;
-    left: 61px;
-    background-color: #bc95d6;
+    .AdminSection__header-linedecorator_upper::before {
+        content: "";
+        position: absolute;
+        width: 3px;
+        height: 48px;
+        top: 0px;
+        left: 61px;
+        background-color: #bc95d6;
+    }
+
+    .AdminSection__header-linedecorator_both::before {
+        content: "";
+        position: absolute;
+        width: 3px;
+        height: 100%;
+        top: 0px;
+        left: 61px;
+        background-color: #bc95d6;
+    }
 }
 
 .AdminSection__header-close-button {
@@ -115,26 +139,32 @@
     flex-direction: column;
     align-items: flex-start;
     background: rgba(234, 233, 235, 0.95);
-    padding: 35px 32px 36px 104px;
+    padding: 35px 5px 36px 104px;
     text-align: center;
     position: relative;
+}
+@media (max-width: 768px) {
+    .AdminSection__body-container {
+        padding-left: 31px;
+    }
 }
 
 .AdminSection__body-container_hidden {
     display: none;
 }
 
-.AdminSection__body-container_linedecorator:before {
-    content: "";
-    position: absolute;
-    width: 3px;
-    height: 100%;
-    top: 0px;
-    left: 61px;
-    background-color: #bc95d6;
+@media (min-width: 768px) {
+    .AdminSection__body-container_linedecorator:before {
+        content: "";
+        position: absolute;
+        width: 3px;
+        height: 100%;
+        top: 0px;
+        left: 61px;
+        background-color: #bc95d6;
+    }
 }
 
 .AdminSection__body-container button:hover {
     box-shadow: 0px 3px 3px #0000003d;
 }
-

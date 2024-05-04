@@ -1,5 +1,6 @@
 .HallChooser__hall-list {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .HallChooser__hall-item {

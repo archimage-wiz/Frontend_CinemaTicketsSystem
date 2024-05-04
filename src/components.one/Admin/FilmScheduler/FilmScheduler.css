@@ -48,9 +48,9 @@
     display: flex;
     flex-direction: column;
     padding-left: 35px;
-    padding-right: 35px;
     gap: 35px;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .film-seances__hall-item_container {
@@ -102,6 +102,14 @@
     left: 0px;
     text-align: left;
 }
+@media screen and (max-width: 768px) {
+    .film-seances__seance-scheduler-seance {
+        font-size: 10px;
+        padding-right: 3px;
+        width: min-content;
+        /* overflow-x: hidden; */
+    }
+}
 
 .film-seances__seance-scheduler-seance::before {
     content: "";
@@ -144,9 +152,9 @@
 .FilmScheduler__seance-del-bin {
     display: flex;
     position: absolute;
-    left: -50px;
-    width: 50px;
-    height: 50px;
+    left: -40px;
+    width: 40px;
+    height: 40px;
     /* background: rgba(234, 233, 235, 0.95); */
     background: url("/img/trash_bin.png");
     background-size: contain;
@@ -154,6 +162,7 @@
     background-repeat: no-repeat;
     background-color: transparent;
     top: 20px;
+    box-sizing: border-box;
 }
 .FilmScheduler__seance-del-bin_hide{
     display: none;

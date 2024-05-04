@@ -58,6 +58,12 @@ export function Login(props: LoginProps) {
                     </div>
                 </form>
             </section>
+            <section className="PopupForm__container">
+                <div style={{ color: 'white' }}>
+                    <div>Логин - shfe-diplom@netology.ru</div>
+                    <div>Пароль - shfe-diplom</div>
+                </div>
+            </section>
         </>
     );
 }
