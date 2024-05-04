@@ -148,7 +148,7 @@
     width: 50px;
     height: 50px;
     /* background: rgba(234, 233, 235, 0.95); */
-    background: url("img/trash_bin.png");
+    background: url("/img/trash_bin.png");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

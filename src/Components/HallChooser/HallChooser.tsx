@@ -1,6 +1,7 @@
 import "./HallChooser.css";
 import { useEffect, useState } from "react";
 import { BackendAPI } from "../../BackendAPI/BackendAPI";
+import { HallType } from "../../Types/Hall";
 
 export function HallChooser(props: { chooseHallF: (n: number) => void }) {
     const [backend] = useState(BackendAPI.getInstance());
@@ -10,7 +11,7 @@ export function HallChooser(props: { chooseHallF: (n: number) => void }) {
     useEffect(() => {
         backend.subscribeHallsUpdate(updateHalls);
     }, []);
-    function updateHalls(halls: []) {
+    function updateHalls(halls: HallType[]) {
         setHalls(halls);
     }
 

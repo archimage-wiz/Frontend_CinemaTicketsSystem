@@ -1,6 +1,6 @@
 .AdminMain__background {
     background-color: rgba(0, 0, 0, 0.5);
-    background-image: url("img/admin_bg.jpg");
+    background-image: url("/img/admin_bg.jpg");
     background-repeat: no-repeat;
     /* background-size: cover; */
     background-size: auto 100%;
@@ -101,7 +101,7 @@
     width: 24px;
     height: 16px;
     right: 20px;
-    background-image: url("img/down_arrow.png");
+    background-image: url("/img/down_arrow.png");
     background-size: cover;
     cursor: pointer;
 }
