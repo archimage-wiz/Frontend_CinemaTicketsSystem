@@ -24,7 +24,6 @@ export class BackendAPI {
             this.isAuth = true;
         }
         this.refreshAllData();
-        console.log("BackendAPI created");
     }
 
     public static getInstance(): BackendAPI {
@@ -103,7 +102,7 @@ export class BackendAPI {
         });
         this.seances = jsonData.result.seances;
         this.globalUpdate();
-        console.log(jsonData.result);
+        // console.log(jsonData.result);
     }
     async getHallConfig(seanceId: number, date: string) {
         return fetch(this.domain + "/hallconfig?" + `seanceId=${seanceId}&date=${date}`).then((response) =>
@@ -113,6 +112,24 @@ export class BackendAPI {
     setChosenSeats(seats: { place: number; row: number; seanceId: number; cost: number }[]) {
         this.chosenSeats = seats;
     }
+    public async buyTickets(seanceId:number, tickets: chosenSeats[], date: string) {
+        const newTickets = tickets.map((ticket) => {
+            return {
+                place: ticket.place+1,
+                row: ticket.row+1,
+                coast: ticket.cost
+            }
+        })
+        const params = new FormData();
+        params.set("seanceId", String(seanceId));
+        params.set("ticketDate", date);
+        params.set("tickets", JSON.stringify(newTickets));
+        return fetch(this.domain + "/ticket", {
+            method: "POST",
+            body: params,
+        }).then((response) => response.json());
+    }
+
     public async authentication(data: FormData, changeStateF: (state: boolean) => void): Promise<void> {
         const res = await fetch(this.domain + "/login", {
             method: "POST",
@@ -155,6 +172,7 @@ export class BackendAPI {
         xhr.responseType = "json";
         xhr.onload = () => {
             onLoadCallBack();
+            this.refreshAllData();
         };
         xhr.upload.onerror = function () {
             alert(`Произошла ошибка во время отправки: ${xhr.status}`);
@@ -169,8 +187,8 @@ export class BackendAPI {
         xhr.open("POST", this.domain + "/seance", true);
         xhr.responseType = "json";
         xhr.onload = () => {
-            console.log(xhr.response);
             onLoadCallBack();
+            this.refreshAllData();
         };
         xhr.upload.onerror = function () {
             alert(`Произошла ошибка во время отправки: ${xhr.status}`);

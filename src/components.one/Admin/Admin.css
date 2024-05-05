@@ -2,12 +2,12 @@
     background-color: rgba(0, 0, 0, 0.5);
     background-image: url("/img/admin_bg.jpg");
     background-repeat: no-repeat;
-    /* background-size: cover; */
-    background-size: auto 100%;
+    background-size: cover;
     font-family: "Roboto", sans-serif;
     color: #fff;
     min-height: 100vh;
     min-width: 390px;
+    width: 100%;
     position: relative;
     z-index: 1;
     padding: 0px 0px 100px 0px;
@@ -88,7 +88,7 @@
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
     .AdminSection__header-linedecorator::before {
         content: "";
         position: absolute;
@@ -153,7 +153,7 @@
     display: none;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
     .AdminSection__body-container_linedecorator:before {
         content: "";
         position: absolute;

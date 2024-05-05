@@ -51,13 +51,13 @@ export function FilmList(props: { date: Date }) {
         seances?.forEach((seance: SeanceType) => {
             const film: FilmType = filmById(seance.seance_filmid)!;
             const hall: HallType = hallById(seance.seance_hallid)!;
-            if (!filmData[seance.seance_filmid]) {
-                filmData[seance.seance_filmid] = {
-                    ...film,
-                    halls: {},
-                };
-            }
             if (hall?.hall_open === 1) {
+                if (!filmData[seance.seance_filmid]) {
+                    filmData[seance.seance_filmid] = {
+                        ...film,
+                        halls: {},
+                    };
+                }
                 if (!filmData[seance.seance_filmid].halls[seance.seance_hallid]) {
                     filmData[seance.seance_filmid].halls[seance.seance_hallid] = [];
                 }

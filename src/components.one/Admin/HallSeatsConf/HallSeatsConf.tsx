@@ -14,20 +14,33 @@ export function HallSeatsConf() {
     const [hallCols, setHallCols] = useState(1);
     const [sendButtonDisabled, setSendButtonDisabled] = useState(false);
     const [visible, setVisible] = useState(true);
+    const [buttonsVisible, setButtonsVisible] = useState(false);
 
     useEffect(() => {
         backend.subscribeHallsUpdate(updateHalls);
     }, []);
     function updateHalls(hallsData: HallType[]) {
         setHalls(hallsData);
-        setChosenHallConfig(hallsData[chosenHall]?.["hall_config"]);
+        if (hallsData[chosenHall]) {
+            setChosenHallConfig(() => copyHallConfig(hallsData[chosenHall]));
+        }
         setHallRows(hallsData[chosenHall]?.["hall_config"]?.["length"]);
         setHallCols(hallsData[chosenHall]?.["hall_config"][0]?.["length"]);
+    }
+    function copyHallConfig(oldHallData: HallType) {
+        if (Array.isArray(oldHallData["hall_config"])) {
+            const newChosenHallConfig: HallConfigType[] = [];
+            oldHallData["hall_config"].forEach((hallData) => {
+                newChosenHallConfig.push([...hallData]);
+            });
+            return newChosenHallConfig;
+        }
+        return [];
     }
 
     function chooseHall(hall: number) {
         setChosenHall(hall);
-        setChosenHallConfig(halls[hall]?.["hall_config"]);
+        setChosenHallConfig(() => copyHallConfig(halls[hall]));
         setHallRows(halls[hall]?.["hall_config"]?.["length"]);
         setHallCols(halls[hall]?.["hall_config"]?.[0]?.["length"]);
     }
@@ -45,6 +58,7 @@ export function HallSeatsConf() {
             newHallConfig = [...chosenHallConfig, ...new Array(newTarget - chosenHallConfig.length).fill(newLine)];
         }
         setChosenHallConfig(newHallConfig);
+        setButtonsVisible(true);
     }
     function handleColsChange(event: React.ChangeEvent<HTMLInputElement>) {
         const newTarget = Number(event.target.value);
@@ -57,6 +71,7 @@ export function HallSeatsConf() {
                 newChosenHallConfig.push([...row, ...new Array(newTarget - row.length).fill("disabled")]);
         });
         setChosenHallConfig(newChosenHallConfig);
+        setButtonsVisible(true);
     }
     function changeSeatState(row: number, col: number) {
         if (!chosenHallConfig[row][col]) return;
@@ -75,27 +90,46 @@ export function HallSeatsConf() {
                 break;
         }
         setChosenHallConfig(newChosenHallConfig);
+        setButtonsVisible(true);
     }
     function restoreHallConfig() {
-        setChosenHallConfig(halls[chosenHall]?.["hall_config"]);
+        setButtonsVisible(false);
+        setChosenHallConfig(() => copyHallConfig(halls[chosenHall]));
         setHallRows(halls[chosenHall]?.["hall_config"]?.["length"]);
         setHallCols(halls[chosenHall]?.["hall_config"][0]?.["length"]);
     }
     function saveHallConfig() {
         setSendButtonDisabled(true);
+        setButtonsVisible(false);
         const res = backend.saveHallConfig(
             halls[chosenHall]?.["id"],
             chosenHallConfig.length,
             chosenHallConfig[0].length,
             chosenHallConfig
         );
-        res.then((data) => {
-            console.log(data);
+        res.then(() => {
             setSendButtonDisabled(false);
         });
     }
     function toggleVisibility() {
         setVisible(!visible);
+    }
+
+    function getButtons() {
+        return buttonsVisible ? (
+            <>
+                <div className="HallSeatsConf__buttons-container">
+                    <input type="button" value="Отмена" className="cancel-button" onClick={() => restoreHallConfig()} />
+                    <input
+                        type="button"
+                        value="Сохранить"
+                        className="standart-button"
+                        onClick={saveHallConfig}
+                        disabled={sendButtonDisabled}
+                    />
+                </div>
+            </>
+        ) : null;
     }
 
     function HallSeats() {
@@ -186,22 +220,7 @@ export function HallSeatsConf() {
                             <HallSeats />
                         </div>
                     </div>
-
-                    <div className="HallSeatsConf__buttons-container">
-                        <input
-                            type="button"
-                            value="Отмена"
-                            className="cancel-button"
-                            onClick={() => restoreHallConfig()}
-                        />
-                        <input
-                            type="button"
-                            value="Сохранить"
-                            className="standart-button"
-                            onClick={saveHallConfig}
-                            disabled={sendButtonDisabled}
-                        />
-                    </div>
+                    {getButtons()}
                 </section>
             </div>
         </>

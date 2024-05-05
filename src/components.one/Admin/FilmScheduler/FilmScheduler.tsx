@@ -75,6 +75,17 @@ export function FilmScheduler() {
             backend.deleteSeance(Number(seanceId));
         }
     }
+    function filmPosition(seanceTime: string): string {
+        const [seanceHours, seanceMinutes] = seanceTime.split(":");
+        const seanceShiftInMinutes: number = Number(seanceHours) * 60 + Number(seanceMinutes);
+        const shift = (seanceShiftInMinutes / 1440) * 100;
+        return `${shift}%`;
+    }
+    function filmWidth(filmId: number): string {
+        const film = filmById(filmId);
+        const shift = (Number(film?.film_duration) / 1440) * 100;
+        return `${shift}%`;
+    }
 
     function onDragHandler(event: React.DragEvent<HTMLDivElement>) {
         event.preventDefault();
@@ -95,25 +106,23 @@ export function FilmScheduler() {
                 <section className="AdminSection__body-container AdminSection__body-container_linedecorator">
                     <input type="submit" value="Добавить фильм" className="standart-button" onClick={toggleAddPopup} />
                     <div className="film-seances__film-chooser_container">
-                        {films.map(
-                            (film: FilmType) => (
-                                <div
-                                    key={crypto.randomUUID()}
-                                    className="film-seances__film-chooser-item"
-                                    style={{ backgroundColor: film.color }}
-                                    draggable="true"
-                                    onDragStart={(e) => startDragging(e, film.id)}
-                                >
-                                    <img src={film.film_poster} className="film-seances__film-chooser-poster"></img>
-                                    <div className="film-seances__film-chooser-info">
-                                        <div className="film-seances__film-chooser-title">{film.film_name}</div>
-                                        <div className="film-seances__film-chooser-duration">
-                                            {film.film_duration} {minutesSpellingTransform(Number(film.film_duration))}
-                                        </div>
+                        {films.map((film: FilmType) => (
+                            <div
+                                key={crypto.randomUUID()}
+                                className="film-seances__film-chooser-item"
+                                style={{ backgroundColor: film.color }}
+                                draggable="true"
+                                onDragStart={(e) => startDragging(e, film.id)}
+                            >
+                                <img src={film.film_poster} className="film-seances__film-chooser-poster"></img>
+                                <div className="film-seances__film-chooser-info">
+                                    <div className="film-seances__film-chooser-title">{film.film_name}</div>
+                                    <div className="film-seances__film-chooser-duration">
+                                        {film.film_duration} {minutesSpellingTransform(Number(film.film_duration))}
                                     </div>
                                 </div>
-                            )
-                        )}
+                            </div>
+                        ))}
                     </div>
 
                     <div className="film-seances__seance-scheduler_container">
@@ -148,6 +157,8 @@ export function FilmScheduler() {
                                                             className="film-seances__seance-scheduler-seance"
                                                             style={{
                                                                 backgroundColor: filmById(seance.seance_filmid)?.color,
+                                                                left: filmPosition(seance.seance_time),
+                                                                width: filmWidth(seance.seance_filmid),
                                                             }}
                                                             draggable="true"
                                                             onDragStart={(e) => startDraggingSeance(e, seance.id)}
@@ -165,10 +176,6 @@ export function FilmScheduler() {
                                 </div>
                             </div>
                         ))}
-                    </div>
-                    <div className="FilmScheduler__buttons-container">
-                        <input type="button" value="Отмена" className="cancel-button" />
-                        <input type="submit" value="Сохранить" className="standart-button" />
                     </div>
                 </section>
             </div>

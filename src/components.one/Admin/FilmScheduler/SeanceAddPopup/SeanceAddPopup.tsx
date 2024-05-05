@@ -15,7 +15,6 @@ export function SeanceAddPopup(props: SeanceAddPopupProps) {
     const { filmId, hallId, closeFunc } = props;
     const [halls, setHalls] = useState(backend.getHalls());
     const [films, setFilms] = useState(backend.getFilms());
-    // const [seances, setSeances] = useState(backend.getSeances());
     const [film, setFilm] = useState(filmById(filmId));
     const [hall, setHall] = useState(hallById(hallId));
     const [filmName, setFilmName] = useState(film?.film_name);
@@ -24,15 +23,12 @@ export function SeanceAddPopup(props: SeanceAddPopupProps) {
 
     const getHalls = () => (backend.getHalls().length > 0 ? setHalls(backend.getHalls()) : setTimeout(getHalls, 500));
     const getFilms = () => (backend.getFilms().length > 0 ? setFilms(backend.getFilms()) : setTimeout(getFilms, 500));
-    // const getSeances = () =>
-    //     backend.getSeances().length > 0 ? setSeances(backend.getSeances()) : setTimeout(getSeances, 500);
     const getFilm = () => films.length > 0 ? setFilm(filmById(filmId)) : setTimeout(getFilm, 500);
     const getHall = () => halls.length > 0 ? setHall(hallById(hallId)) : setTimeout(getHall, 500);
 
     useEffect(() => {
         getHalls();
         getFilms();
-        // getSeances();
         getFilm();
         getHall();
     }, []);

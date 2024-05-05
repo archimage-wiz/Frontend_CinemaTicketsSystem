@@ -11,7 +11,7 @@ export function HallPriceConf() {
     const [standartSeatPrice, setStandartSeatPrice] = useState(0);
     const [vipSeatPrice, setVipSeatPrice] = useState(0);
     const sendButton = useRef<HTMLInputElement | null>(null);
-
+    const [buttonsVisible, setButtonsVisible] = useState(false);
 
     useEffect(() => {
         backend.subscribeHallsUpdate(updateHalls);
@@ -40,16 +40,19 @@ export function HallPriceConf() {
     }
 
     function standartSeatPriceHandler(event: React.ChangeEvent<HTMLInputElement>) {
+        setButtonsVisible(true);
         setStandartSeatPrice(() => {
             return Number(event.target.value);
         });
     }
     function vipSeatPriceHandler(event: React.ChangeEvent<HTMLInputElement>) {
+        setButtonsVisible(true);
         setVipSeatPrice(() => {
             return Number(event.target.value);
         });
     }
     function restorePrice() {
+        setButtonsVisible(false);
         setStandartSeatPrice(() => {
             return Number(halls[chosenHall.current]?.["hall_price_standart"]);
         });
@@ -59,12 +62,27 @@ export function HallPriceConf() {
     }
     function savePrice() {
         sendButton.current!.disabled = true;
+        setButtonsVisible(false);
         const res = backend.saveSeatsPrice(halls[chosenHall.current]?.["id"], standartSeatPrice, vipSeatPrice);
         res.then(() => {
-            sendButton.current!.disabled = false;
-            // setHalls(() => backend.getHalls());
+            // sendButton.current!.disabled = false;
             backend.globalUpdate();
         });
+    }
+
+    function getButtons() {
+        return buttonsVisible ? (
+            <div className="HallPriceConf__buttons-container">
+                <input type="button" value="Отмена" className="cancel-button" onClick={restorePrice} />
+                <input
+                    type="button"
+                    value="Сохранить"
+                    className="standart-button"
+                    onClick={savePrice}
+                    ref={sendButton}
+                />
+            </div>
+        ) : null;
     }
 
     return (
@@ -96,16 +114,7 @@ export function HallPriceConf() {
                             <div> VIP кресла</div>
                         </div>
                     </label>
-                    <div className="HallPriceConf__buttons-container">
-                        <input type="button" value="Отмена" className="cancel-button" onClick={restorePrice} />
-                        <input
-                            type="button"
-                            value="Сохранить"
-                            className="standart-button"
-                            onClick={savePrice}
-                            ref={sendButton}
-                        />
-                    </div>
+                    {getButtons()}
                 </section>
             </div>
         </>

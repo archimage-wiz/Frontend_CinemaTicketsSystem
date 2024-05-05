@@ -30,6 +30,11 @@ export function PaymentProc() {
         backend.subscribeHallsUpdate(updateHalls);
         backend.subscribeFilmsUpdate(updateFilms);
         backend.subscribeSeancesUpdate(updateSeances);
+        return () => {
+            backend.unsubscribeHallsUpdate(updateHalls);
+            backend.unsubscribeFilmsUpdate(updateFilms);
+            backend.unsubscribeSeancesUpdate(updateSeances);
+        }
     }, []);
 
     function updateSeances(seances: SeanceType[]) {
@@ -43,7 +48,9 @@ export function PaymentProc() {
     }
 
     function getSeats() {
-        return seats.map((s) => s.place + 1).join(", ");
+        return seats.map((s) => {
+            return `${s.row}/${s.place}`;
+        }).join(", ");
     }
     function getHallName() {
         return hall.hall_name;
@@ -57,7 +64,14 @@ export function PaymentProc() {
 
     function getResultTicket(e: React.MouseEvent<HTMLButtonElement>) {
         e.currentTarget.disabled = true;
-        navigate(`/tickets/${seanceId}/${hall?.id}/${film.id}/${currentDate}`);
+        backend.buyTickets(Number(seanceId), seats, currentDate!).then((data) => {
+            if (data.success === true) {
+                navigate(`/tickets/${seanceId}/${hall?.id}/${film.id}/${currentDate}`);
+            } else {
+                alert(data.error);
+                navigate("/");
+            }
+        })
     }
 
     return (
@@ -74,7 +88,7 @@ export function PaymentProc() {
                     На фильм: <span className="PaymentProc__standart-text_bold">{film.film_name}</span>
                 </div>
                 <div>
-                    Места: <span className="PaymentProc__standart-text_bold">{getSeats()}</span>
+                    Ряд / Место: <span className="PaymentProc__standart-text_bold">{getSeats()}</span>
                 </div>
                 <div>
                     В зале: <span className="PaymentProc__standart-text_bold">{getHallName()}</span>
