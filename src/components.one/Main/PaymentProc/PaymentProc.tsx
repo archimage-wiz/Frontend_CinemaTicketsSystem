@@ -49,7 +49,7 @@ export function PaymentProc() {
 
     function getSeats() {
         return seats.map((s) => {
-            return `${s.row}/${s.place}`;
+            return `${s.row+1}/${s.place+1}`;
         }).join(", ");
     }
     function getHallName() {

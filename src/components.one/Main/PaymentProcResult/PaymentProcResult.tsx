@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { BackendAPI } from "../../../BackendAPI/BackendAPI";
 import { Header } from "../../../components/Header/Header";
 import { useNavigate, useParams } from "react-router-dom";
-import {QRCodeSVG} from 'qrcode.react';
+import { QRCodeSVG } from "qrcode.react";
 import { chosenSeats } from "../../../Types/ChosenSeats";
 
 export function PaymentProcResult() {
@@ -38,7 +38,11 @@ export function PaymentProcResult() {
     }, []);
 
     function getSeats() {
-        return seats.map((s) => s.place + 1).join(", ");
+        return seats
+            .map((s) => {
+                return `${s.row + 1}/${s.place + 1}`;
+            })
+            .join(", ");
     }
     function getHallName() {
         return hall.hall_name;
@@ -75,7 +79,7 @@ export function PaymentProcResult() {
                     На фильм: <span className="PaymentProc__standart-text_bold">{film.film_name}</span>
                 </div>
                 <div>
-                    Места: <span className="PaymentProc__standart-text_bold">{getSeats()}</span>
+                    Ряд / Место: <span className="PaymentProc__standart-text_bold">{getSeats()}</span>
                 </div>
                 <div>
                     В зале: <span className="PaymentProc__standart-text_bold">{getHallName()}</span>
