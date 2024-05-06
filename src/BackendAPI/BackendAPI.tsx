@@ -6,7 +6,6 @@ import { SeanceType } from "../Types/Seance";
 const backendDomainUrl = "https://shfe-diplom.neto-server.ru";
 const filmColorsArr = ["#caff85", "#85ff89", "#85ffd3", "#85e2ff", "#8599ff"];
 
-
 export class BackendAPI {
     private static instance: BackendAPI;
     private domain: string;
@@ -112,14 +111,14 @@ export class BackendAPI {
     setChosenSeats(seats: { place: number; row: number; seanceId: number; cost: number }[]) {
         this.chosenSeats = seats;
     }
-    public async buyTickets(seanceId:number, tickets: chosenSeats[], date: string) {
+    public async buyTickets(seanceId: number, tickets: chosenSeats[], date: string) {
         const newTickets = tickets.map((ticket) => {
             return {
-                place: ticket.place+1,
-                row: ticket.row+1,
-                coast: ticket.cost
-            }
-        })
+                place: ticket.place + 1,
+                row: ticket.row + 1,
+                coast: ticket.cost,
+            };
+        });
         const params = new FormData();
         params.set("seanceId", String(seanceId));
         params.set("ticketDate", date);

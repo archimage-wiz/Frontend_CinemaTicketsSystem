@@ -8,7 +8,7 @@ import { FilmType } from "../../../../Types/Film";
 import { SeanceType } from "../../../../Types/Seance";
 
 export function FilmList(props: { date: Date }) {
-    const displayDate = props.date;
+    const selectedDate = props.date;
     const [backend] = useState(BackendAPI.getInstance());
     const [halls, setHalls] = useState<HallType[]>([]);
     const [films, setFilms] = useState<FilmType[]>([]);
@@ -73,11 +73,10 @@ export function FilmList(props: { date: Date }) {
         return filmData;
     }
 
-    function pastSeance(seance: string): boolean {
-        const currentTime = new Date().getTime();
+    function futureSeance(seance: string): boolean {
         const seanceHrsMins = seance.split(":");
-        const seanceTime = new Date(new Date().setHours(Number(seanceHrsMins[0]), Number(seanceHrsMins[1]))).getTime();
-        return seanceTime < currentTime;
+        const seanceTime = new Date(new Date(selectedDate).setHours(Number(seanceHrsMins[0]), Number(seanceHrsMins[1])));
+        return new Date() < seanceTime;
     }
 
     return (
@@ -99,7 +98,7 @@ export function FilmList(props: { date: Date }) {
                             <div className="FilmList__hall-list-hall-name">{hallById(Number(hallId))?.hall_name}</div>
                             <div key={crypto.randomUUID()} className="FilmList__film-seances-time">
                                 {seances.map((seance: { id: number; time: string }) =>
-                                    pastSeance(seance.time) ? (
+                                    futureSeance(seance.time) === false ? (
                                         <div
                                             key={crypto.randomUUID()}
                                             className="FilmList__film-seances-time-item_past FilmList__film-seances-time-item"
@@ -109,7 +108,7 @@ export function FilmList(props: { date: Date }) {
                                     ) : (
                                         <Link
                                             key={crypto.randomUUID()}
-                                            to={`/hall/${seance.id}/${displayDate.toISOString().split("T")[0]}`}
+                                            to={`/hall/${seance.id}/${selectedDate.toISOString().split("T")[0]}`}
                                             className="FilmList__film-seances-time-item FilmList__film-seances-time-item_avail "
                                         >
                                             {seance.time}
